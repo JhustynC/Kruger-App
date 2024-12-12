@@ -1,0 +1,36 @@
+{
+  "name": "proyecto-kruger",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "rimraf ./dist && tsc",
+    "start": "node dist/app.js",
+    "prisma:migrate:prod": "prisma migrate deploy",
+    "prisma:migrate:postgres": "dotenv -e ./.env.test -- npx prisma migrate deploy",
+    "test": "npm run prisma:migrate:postgres && jest",
+    "test:watch": "npm run prisma:migrate:postgres && jest --watch",
+    "test:coverage": "npm run prisma:migrate:postgres && jest --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "dotenv": "^16.4.7",
+    "dotenvs": "^1.0.5",
+    "prisma": "^6.0.1",
+    "rimraf": "^5.0.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.0.1",
+    "@types/compression": "^1.7.5",
+    "compression": "^1.7.5",
+    "env-var": "^7.5.0",
+    "express": "^4.21.2"
+  }
+}
