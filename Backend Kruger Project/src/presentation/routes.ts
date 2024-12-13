@@ -2,6 +2,7 @@ import { Router } from "express";
 import { UserRoutes } from "./users/routes";
 import { AuthRoutes } from "./auth/routes";
 import { isAuthenticated } from "./auth/middleware/auth.middleware";
+import { ProfileRoutes } from "./profile/routes";
 
 export class AppRoutes {
   static get routes(): Router {
@@ -18,9 +19,17 @@ export class AppRoutes {
     // Rutas protegidas
     router.use("/users", isAuthenticated, UserRoutes.routes);
 
+    // Ruta para el perfil de usuario
+    // Rutas de perfil
+    router.use("/", ProfileRoutes.routes); // Aquí la ruta de /profile es accesible
+
     // Middleware para manejar rutas desconocidas
     router.use((req, res) => {
-      res.redirect("/auth/login");
+      if (req.isAuthenticated()) {
+        res.redirect("/profile"); // Redirige al perfil si está autenticado
+      } else {
+        res.redirect("/auth/login"); // Redirige al login si no está autenticado
+      }
     });
 
     return router;

@@ -47,6 +47,11 @@ export class Server {
         secret: "secret",
         resave: false,
         saveUninitialized: true,
+        cookie: {
+          httpOnly: true, // Importante para mayor seguridad
+          secure: process.env.NODE_ENV === "production", // Si estás en producción, usar HTTPS
+          maxAge: 60 * 60 * 1000, // Tiempo de expiración de la cookie
+        },
       })
     );
 
