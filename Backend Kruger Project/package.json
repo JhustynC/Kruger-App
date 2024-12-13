@@ -18,7 +18,10 @@
   "description": "",
   "devDependencies": {
     "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.1",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.2",
+    "@types/passport": "^1.0.17",
     "dotenv": "^16.4.7",
     "dotenvs": "^1.0.5",
     "prisma": "^6.0.1",
@@ -29,8 +32,15 @@
   "dependencies": {
     "@prisma/client": "^6.0.1",
     "@types/compression": "^1.7.5",
+    "@types/passport-google-oauth2": "^0.1.10",
+    "bcryptjs": "^2.4.3",
     "compression": "^1.7.5",
     "env-var": "^7.5.0",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "jsonwebtoken": "^9.0.2",
+    "passport": "^0.7.0",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-oauth2": "^1.8.0"
   }
 }
