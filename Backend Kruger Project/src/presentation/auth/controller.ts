@@ -4,20 +4,7 @@ import bcrypt from "bcrypt";
 
 export class AuthController {
   public login = (req: Request, res: Response) => {
-    res.send(`
-      <form action="/auth/login-credentials" method="POST">
-        <div>
-          <label for="mail">Email</label>
-          <input type="email" name="email" required />
-        </div>
-        <div>
-          <label for="password">Password</label>
-          <input type="password" name="password" required />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <a href='/auth/google'>Login with Google</a>
-    `);
+    res.render("login"); // Renderiza la vista 'login.ejs'
   };
 
   public loginWithCredentials = async (req: Request, res: Response) => {
@@ -84,7 +71,8 @@ export class AuthController {
         }
 
         // Redirigir al perfil si todo es correcto
-        return res.redirect("/auth/profile"); // Cambiado a /auth/profile
+        // return res.redirect("/auth/profile");
+        return res.redirect("/profile"); // Cambiado a /auth/profile
       });
     } catch (error) {
       console.error(error);

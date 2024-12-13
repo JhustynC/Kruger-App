@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit User</title>
+</head>
+
+<body>
+  <h1>Editar Usuario</h1>
+  <form action="/profile/update-user" method="POST">
+    <div>
+      <label for="idCard">Cédula:</label>
+      <input type="text" name="idCard" id="idCard" value="<%= user.idCard %>" required>
+    </div>
+    <div>
+      <label for="names">Nombres:</label>
+      <input type="text" name="names" id="names" value="<%= user.names %>" required>
+    </div>
+    <div>
+      <label for="surnames">Apellidos:</label>
+      <input type="text" name="surnames" id="surnames" value="<%= user.surnames %>" required>
+    </div>
+    <div>
+      <label for="mail">Correo Electrónico:</label>
+      <input type="email" name="mail" id="mail" value="<%= user.mail %>" required>
+    </div>
+    <div>
+      <label for="role">Rol:</label>
+      <select name="role" id="role" required>
+        <option value="ADMIN" <%=user.role==='ADMIN' ? 'selected' : '' %>>ADMIN</option>
+        <option value="CLIENT" <%=user.role==='CLIENT' ? 'selected' : '' %>>CLIENT</option>
+      </select>
+    </div>
+    <button type="submit" name="action" value="updateClient">Guardar Cambios</button>
+  </form>
+  <a href="/profile/dashboard?listClientsForm=true">Cancelar</a>
+</body>
+
+</html>

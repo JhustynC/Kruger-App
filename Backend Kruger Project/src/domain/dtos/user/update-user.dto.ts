@@ -52,15 +52,13 @@ export class UpdateUserDto {
       password,
     } = props;
 
-    if (!idCard || isNaN(idCard)) {
-      return ["Id must be a number", undefined];
-    }
-    if (isNaN(idCard)) {
-      return ["Id must be a number", undefined];
+    if (idCard) {
+      if (isNaN(idCard)) {
+        return ["Id must be a number", undefined];
+      }
     }
 
-    if (!coordinates) ["Address Coordinates is required", undefined];
-    else {
+    if (coordinates) {
       if (!Array.isArray(coordinates)) {
         return ["Address Coordinates must be an array", undefined];
       }
@@ -117,12 +115,15 @@ export class UpdateUserDto {
       }
     }
 
-    if (!username || typeof username !== "string") {
-      return ["Username must be a string", undefined];
+    if (username) {
+      if (typeof username !== "string") {
+        return ["Username must be a string", undefined];
+      }
     }
-
-    if (!password || typeof password !== "string") {
-      return ["Password must be a string", undefined];
+    if (password) {
+      if (typeof password !== "string") {
+        return ["Password must be a string", undefined];
+      }
     }
 
     return [

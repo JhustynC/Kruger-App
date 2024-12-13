@@ -21,7 +21,13 @@ export class AppRoutes {
     // router.use("/users", UserRoutes.routes);
 
     // Ruta para el perfil de usuario
-    router.use("/profile", ProfileRoutes.routes);
+    // Ruta principal para el perfil (redirige al dashboard)
+    router.get("/profile", isAuthenticated, (req, res) => {
+      res.redirect("/profile/dashboard");
+    });
+
+    // Rutas del perfil
+    router.use("/profile", isAuthenticated, ProfileRoutes.routes);
 
     // Middleware para manejar rutas desconocidas
     router.use((req, res) => {

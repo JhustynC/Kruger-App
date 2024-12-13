@@ -17,15 +17,19 @@ export class ProfileRoutes {
     const userRepository = new UserRepositoryImp(new UserDatasourceImp());
     const profileController = new ProfileController(userRepository);
 
-    // Ruta protegida
+    // Ruta para optener las opciones del administrador
     router.get(
       "/dashboard",
       isAuthenticated,
       isEmailRegistered,
-      profileController.profile
+      profileController.dasboard
     );
-    router.post("/", profileController.createClient.bind(profileController));
-    
+
+    router.post("/", profileController.createUser.bind(profileController));
+    router.get("/delete-user/:idCard", profileController.deleteClient);
+    router.get("/edit-user/:idCard", asyncHandler(profileController.editUser));
+    router.post("/update-user", asyncHandler(profileController.updateUser));
+
     return router;
   }
 }

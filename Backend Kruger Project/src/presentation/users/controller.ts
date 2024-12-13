@@ -56,7 +56,7 @@ export class UserController {
     if (isNaN(id)) res.status(400).json({ error: "Invalid ID" });
 
     new DeleteUser(this.repository)
-      .exceute(id)
+      .exceute(id.toFixed(2))
       .then((user) => res.json(user))
       .catch((err) => res.status(400).json({ error: `${err}` }));
   };

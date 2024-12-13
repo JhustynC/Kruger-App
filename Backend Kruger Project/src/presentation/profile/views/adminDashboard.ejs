@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+</head>
+
+<body>
+  <h1>Welcome <%= displayName %>
+  </h1>
+  <p>You are logged in as an admin.</p>
+
+  <!-- Botones para las opciones de clientes -->
+  <button><a href="/profile/dashboard?clientOptions=true">Clients</a></button>
+
+  <!-- Contenido dinámico -->
+  <div class="client-options">
+    <% if (clientOptions==='true' ) { %>
+      <h2>Client Management</h2>
+      <button><a href="/profile/dashboard?createClientForm=true">Crear Cliente</a></button>
+      <button><a href="/profile/dashboard?listClientsForm=true">Listar Clientes</a></button>
+
+      <% } %>
+  </div>
+
+  <!-- Formulario de Crear Cliente -->
+  <div class="create-client-form">
+    <% if (createClientForm==='true' ) { %>
+      <h2>Create New Client</h2>
+      <form action="/profile" method="POST">
+        <label for="idCard">Cédula:</label>
+        <input type="text" id="idCard" name="idCard" required /><br />
+
+        <label for="coordinates">Coordinates:</label>
+        <input type="text" id="coordinates" name="coordinates" placeholder="Latitud, Longitud" required /><br />
+
+        <label for="firstName">Nombres:</label>
+        <input type="text" id="names" name="names" required /><br />
+
+        <label for="lastName">Apellidos:</label>
+        <input type="text" id="surnames" name="surnames" required /><br />
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="mail" name="mail" required /><br />
+
+        <label for="password">Contraseña:</label>
+        <input type="text" id="password" name="password" required /><br />
+
+        <label for="role">Role:</label>
+        <select id="role" name="role">
+          <option value="CLIENT" selected>CLIENT</option>
+          <option value="ADMIN">ADMIN</option>
+        </select><br />
+
+        <button type="submit" name="action" value="createClient">Create Client</button>
+      </form>
+      <% } %>
+  </div>
+
+  <!-- Formulario para Listar Clientes -->
+  <div class="list-clients-form">
+    <% if (listClientsForm==='true' ) { %>
+      <h2>List of Clients</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Actions</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Mail</th>
+            <th>Role</th>
+            <th>Usernmame</th>
+            <th>Password</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% clients.forEach(function(client) { %>
+            <tr>
+              <td>
+                <button>
+                  <a href="/profile/edit-user/<%= client.idCard %>"
+                    style="text-decoration: none; color: rgb(0, 91, 209);">Edit</a>
+                </button>
+                <button><a href="/profile/delete-user/<%= client.idCard %>"
+                    style="text-decoration: none; color: rgb(231, 10, 10);">Delete</a></button>
+              </td>
+              <td>
+                <%= client.idCard %>
+              </td>
+              <td>
+                <%= client.names %>
+                  <%= client.surnames %>
+              </td>
+              <td>
+                <%= client.mail %>
+              </td>
+              <td>
+                <%= client.role %>
+              </td>
+              <td>
+                <%= client.username %>
+              </td>
+              <td>
+                <%= client.password %>
+              </td>
+            </tr>
+            <% }); %>
+        </tbody>
+      </table>
+      <% } %>
+  </div>
+
+
+</body>
+
+</html>

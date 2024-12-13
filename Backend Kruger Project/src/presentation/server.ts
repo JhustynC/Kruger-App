@@ -10,6 +10,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { envs } from "../config/plugins/envs.plugin";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "../swagger/swagger";
+import methodOverride from "method-override";
 
 export interface Options {
   port: number;
@@ -36,6 +37,16 @@ export class Server {
   }
 
   async start() {
+    //* Para poder usar formularios con method-override
+    this.app.use(methodOverride("_method"));
+
+    //* Para usar el motor de plantilas
+    this.app.set("view engine", "ejs");
+    this.app.set("views", [
+      path.join(__dirname, "../presentation/profile/views"),
+      path.join(__dirname, "../presentation/auth/views"),
+    ]); // Directorio donde se guardan las vistas
+
     //*documentación swagger
     this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
@@ -125,7 +136,7 @@ export class Server {
   public stop = async (): Promise<void> => {
     try {
       console.log("Closing server...");
-      await this.http?.close();
+      this.http?.close();
       console.log("Server closed.");
     } catch (error) {
       console.error("Error closing server:", error);
