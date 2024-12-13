@@ -44,7 +44,7 @@ export class AuthController {
       // }
 
       // Si las credenciales son correctas, iniciar sesión y guardar al usuario en la sesión
-      req.login(user, (err) => {
+      req.login(user, async (err) => {
         if (err) {
           res.status(500).send("Error during login");
         }
@@ -57,10 +57,28 @@ export class AuthController {
     }
   };
 
-  public loginCallback = (req: Request, res: Response) => {
-    //? Se coloca el /auth/profile ya que la ruta /profile no es accsesible desde
-    //? el controlador principal
-    res.redirect("/auth/profile"); // Cambiado a /auth/profile
+  public loginCallback = async (req: Request, res: Response) => {
+    // Buscar al usuario en la base de datos
+    const user = await prisma.user.findUnique({
+      where: { mail: (req.user as any).email },
+    });
+
+    //Modififcar el objeto usuario para obtener el rol del usuario
+    req.user = {
+      ...req.user,
+      role: user?.role,
+    };
+
+    // Si las credenciales son correctas, iniciar sesión y guardar al usuario en la sesión
+    req.login(req.user, (err) => {
+      if (err) {
+        console.error(err);
+      }
+
+      //? Se coloca el /auth/profile ya que la ruta /profile no es accsesible desde
+      //? el controlador principal
+      res.redirect("/auth/profile"); // Cambiado a /auth/profile
+    });
   };
 
   public profile = (req: Request, res: Response) => {

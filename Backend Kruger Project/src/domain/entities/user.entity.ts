@@ -48,11 +48,9 @@ export class UserEntity {
 
     // Validación de que coordinates sea un array de números
     if (
-      !(
-        coordinates.length === 2 &&
-        typeof coordinates[0] === "number" &&
-        typeof coordinates[1] === "number"
-      )
+      coordinates.length === 2 &&
+      `${typeof coordinates[0]}` === "number" &&
+      `${typeof coordinates[1]}` === "number"
     ) {
       throw new Error("Coordinates must be an array of numbers");
     }
