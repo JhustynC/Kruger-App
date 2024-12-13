@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/data/postgres";
+import bcrypt from "bcrypt";
+
 export class AuthController {
   public login = (req: Request, res: Response) => {
     res.send(`
@@ -28,7 +30,7 @@ export class AuthController {
 
     try {
       // Buscar al usuario en la base de datos
-      const user = await prisma.user.findUnique({
+      const user = await prisma.user.findFirst({
         where: { mail: email },
       });
 
@@ -38,10 +40,10 @@ export class AuthController {
       }
 
       // Comparar la contraseña proporcionada con la contraseña cifrada en la base de datos
-      // const isMatch = await bcrypt.compare(password, user.password);
-      // if (!isMatch) {
-      //   return res.status(401).send("Invalid email or password");
-      // }
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        res.status(401).send("Invalid password");
+      }
 
       // Si las credenciales son correctas, iniciar sesión y guardar al usuario en la sesión
       req.login(user, async (err) => {

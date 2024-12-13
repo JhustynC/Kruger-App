@@ -17,8 +17,8 @@ export class AppRoutes {
     router.use("/auth", AuthRoutes.routes);
 
     // Rutas protegidas
-    // router.use("/users", isAuthenticated, UserRoutes.routes);
-    router.use("/users", UserRoutes.routes);
+    router.use("/users", isAuthenticated, UserRoutes.routes);
+    // router.use("/users", UserRoutes.routes);
 
     // Ruta para el perfil de usuario
     // Rutas de perfil

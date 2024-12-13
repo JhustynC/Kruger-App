@@ -4,6 +4,7 @@ import { AbsUserDatasource } from "../../domain/datasources/user.datasource";
 import { CreateUserDto } from "../../domain/dtos/user/create-user.dto";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { UpdateUserDto } from "../../domain/dtos/user/update-user.dto";
+import bcrypt from "bcrypt";
 
 const rolesDB = {
   ADMIN: UserRol.ADMIN,
@@ -16,15 +17,24 @@ export class UserDatasourceImp implements AbsUserDatasource {
     const coordinatesToString = `${coordinates[0]}, ${coordinates[1]}`;
     const roleDB = rolesDB[role as keyof typeof rolesDB];
 
+    //Verficamos si el usuario ya existe en la base de datos
     const fetchUser = await prisma.user.findFirst({
       where: {
-        idCard: createUserDto.idCard,
+        OR: [{ idCard: createUserDto.idCard }, { mail: createUserDto.mail }],
       },
     });
 
     if (fetchUser) {
-      throw new Error("User with this idCard already exists");
+      if (fetchUser.idCard === createUserDto.idCard) {
+        throw new Error("A user with this idCard already exists");
+      }
+      if (fetchUser.mail === createUserDto.mail) {
+        throw new Error("A user with this email already exists");
+      }
     }
+
+    //Encriptación de la contraseña
+    const passwordHashed = await bcrypt.hash(createUserDto.password, 10);
 
     const user = await prisma.user.create({
       data: {
@@ -35,7 +45,7 @@ export class UserDatasourceImp implements AbsUserDatasource {
         mail: createUserDto.mail,
         role: roleDB,
         username: createUserDto.username,
-        password: createUserDto.password,
+        password: passwordHashed,
       },
     });
 

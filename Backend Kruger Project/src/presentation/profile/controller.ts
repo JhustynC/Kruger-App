@@ -5,33 +5,8 @@ export class ProfileController {
   public profile = (req: Request, res: Response) => {
     const user = req.user as any;
 
-    // res.send(
-    //   `Welcome ${
-    //     req.user && (req.user as any).displayName
-    //       ? (req.user as any).displayName
-    //       : (req.user as any).names
-    //   }`
-    // );
-
-    // if (user.role === UserRol.ADMIN) {
-    //   // Si es administrador, mostrar botones para crear clientes, sectores, etc.
-    //   res.send(`
-    //   <h1>Welcome ${user.displayName}</h1>
-    //   <p>You are logged in as an admin.</p>
-    //   <button><a href="/create-client">Create New Client</a></button>
-    //   <button><a href="/create-sector">Create New Sector</a></button>
-    //   <button><a href="/create-interruption">Create New Interruption</a></button>
-    // `);
-    // } else if (user.role === UserRol.CLIENT) {
-    //   // Si es cliente, mostrar solo la opción para revisar interrupciones
-    //   res.send(`
-    //   <h1>Welcome ${user.displayName}</h1>
-    //   <p>You are logged in as a client.</p>
-    //   <button><a href="/check-interruptions">Check Interruptions</a></button>
-    // `);
-    // } else {
-    //   res.send(`<h1>Role not recognized</h1>`);
-    // }
+    console.log("ESTOY AQUI EN PROFILE");
+    console.log(req.user);
 
     if (user.role === UserRol.ADMIN) {
       if (!user) {
@@ -110,6 +85,15 @@ export class ProfileController {
     
     ${formHtml} <!-- Aquí se inserta el formulario dinámicamente -->
   `);
+    } else if (user.role === UserRol.CLIENT) {
+      // Si es cliente, mostrar solo la opción para revisar interrupciones
+      res.send(`
+        <h1>Welcome ${user.displayName}</h1>
+        <p>You are logged in as a client.</p>
+        <button><a href="/check-interruptions">Check Interruptions</a></button>
+      `);
+    } else {
+      res.send(`<h1>Role not recognized</h1>`);
     }
   };
 }
