@@ -9,7 +9,7 @@ import morgan from "morgan";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { envs } from "../config/plugins/envs.plugin";
 import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "../swagger/swagger";
+import { swaggerSpec } from "../../swagger/swagger";
 import methodOverride from "method-override";
 
 export interface Options {

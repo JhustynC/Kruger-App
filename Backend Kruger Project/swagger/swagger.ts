@@ -4,7 +4,7 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Kruger API",
+      title: "Kruger Project API Doc",
       version: "1.0.0",
       description:
         "API para la gestión de un sistema para llevar un registro de los horarios de interrupción del servicio de energía eléctrica",
@@ -16,7 +16,7 @@ const options = {
       },
     ],
   },
-  apis: ["../src/presentation/**/*.ts"],
+  apis: ["./swagger/*.yml"],
 };
 
 export const swaggerSpec = swaggerJsdoc(options);
