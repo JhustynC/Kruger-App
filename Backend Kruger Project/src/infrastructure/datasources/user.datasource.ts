@@ -44,25 +44,54 @@ export class UserDatasourceImp implements AbsUserDatasource {
         surnames: createUserDto.surnames,
         mail: createUserDto.mail,
         role: roleDB,
-        username: createUserDto.username,
+        username: createUserDto.mail,
         password: passwordHashed,
       },
     });
 
     return UserEntity.fromObject(user);
   }
-  getAll(): Promise<UserEntity[]> {
-    throw new Error("Method not implemented.");
+  async getAll(): Promise<UserEntity[]> {
+    const todos = await prisma.user.findMany();
+    return todos.map((user) => UserEntity.fromObject(user));
   }
-  getById(id: number): Promise<UserEntity | undefined> {
-    throw new Error("Method not implemented.");
+  async getById(idCard: string): Promise<UserEntity | undefined> {
+    const userObject = await prisma.user.findUnique({
+      where: {
+        idCard: idCard,
+      },
+    });
+    if (userObject) return UserEntity.fromObject(userObject!);
+    throw `Todo with idCard ${idCard} not found`;
   }
 
-  update(updateTodoDto: UpdateUserDto): Promise<UserEntity | undefined> {
-    throw new Error("Method not implemented.");
+  async update(updateUsesrDto: UpdateUserDto): Promise<UserEntity | undefined> {
+    const { idCard } = updateUsesrDto;
+
+    await this.getById(idCard);
+
+    const updateUser = await prisma.user.update({
+      where: {
+        idCard: idCard,
+      },
+      data: {
+        ...updateUsesrDto.values,
+      },
+    });
+
+    if (updateUser) return UserEntity.fromObject(updateUser);
   }
 
-  delete(id: number): Promise<UserEntity> {
-    throw new Error("Method not implemented.");
+  async delete(idCard: string): Promise<UserEntity> {
+    await this.getById(idCard);
+
+    const user = await prisma.user.delete({
+      where: {
+        idCard,
+      },
+    });
+
+    if (user) return UserEntity.fromObject(user);
+    throw `Error deleting user with idCard); ${idCard}`;
   }
 }

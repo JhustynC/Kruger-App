@@ -25,7 +25,7 @@ export class AuthController {
 
     // Verificar que los campos estén presentes
     if (!email || !password) {
-      res.status(400).send("Email and password are required");
+      return res.status(400).send("Email and password are required");
     }
 
     try {
@@ -35,52 +35,61 @@ export class AuthController {
       });
 
       if (!user) {
-        res.status(401).send("Invalid email or password");
-        return;
+        return res.status(401).send("Invalid email or password");
       }
 
       // Comparar la contraseña proporcionada con la contraseña cifrada en la base de datos
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        res.status(401).send("Invalid password");
+        return res.status(401).send("Invalid password");
       }
 
       // Si las credenciales son correctas, iniciar sesión y guardar al usuario en la sesión
-      req.login(user, async (err) => {
+      req.login(user, (err) => {
         if (err) {
-          res.status(500).send("Error during login");
+          return res.status(500).send("Error during login");
         }
 
         // Redirigir al perfil si todo es correcto
-        res.redirect("/profile");
+        return res.redirect("/profile");
       });
     } catch (error) {
-      res.status(500).send("Server error");
+      console.error(error);
+      return res.status(500).send("Server error");
     }
   };
 
   public loginCallback = async (req: Request, res: Response) => {
-    // Buscar al usuario en la base de datos
-    const user = await prisma.user.findUnique({
-      where: { mail: (req.user as any).email },
-    });
+    try {
+      // Buscar al usuario en la base de datos
+      const user = await prisma.user.findUnique({
+        where: { mail: (req.user as any).email },
+      });
 
-    //Modififcar el objeto usuario para obtener el rol del usuario
-    req.user = {
-      ...req.user,
-      role: user?.role,
-    };
-
-    // Si las credenciales son correctas, iniciar sesión y guardar al usuario en la sesión
-    req.login(req.user, (err) => {
-      if (err) {
-        console.error(err);
+      if (!user) {
+        return res.status(401).send("User not found");
       }
 
-      //? Se coloca el /auth/profile ya que la ruta /profile no es accsesible desde
-      //? el controlador principal
-      res.redirect("/auth/profile"); // Cambiado a /auth/profile
-    });
+      // Modificar el objeto usuario para obtener el rol del usuario
+      req.user = {
+        ...req.user,
+        role: user?.role,
+      };
+
+      // Si las credenciales son correctas, iniciar sesión y guardar al usuario en la sesión
+      req.login(req.user, (err) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send("Error during login");
+        }
+
+        // Redirigir al perfil si todo es correcto
+        return res.redirect("/auth/profile"); // Cambiado a /auth/profile
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("Server error");
+    }
   };
 
   public profile = (req: Request, res: Response) => {

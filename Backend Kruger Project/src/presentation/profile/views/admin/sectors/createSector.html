@@ -1,0 +1,11 @@
+<h1>Create New Sector</h1>
+<form action="/profile" method="POST">
+  <label for="sectorName">Nombre del Sector:</label>
+  <input type="text" id="sectorName" name="sectorName" required /><br />
+
+  <label for="polygon">Polígono de Coordenadas:</label>
+  <textarea id="polygon" name="polygon" rows="4" cols="50" placeholder="((lat1,lon1),(lat2,lon2),...)"
+    required></textarea><br />
+
+  <button type="submit" name="action" value="createSector">Create Sector</button>
+</form>

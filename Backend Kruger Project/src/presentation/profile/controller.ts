@@ -1,92 +1,67 @@
 import { Request, Response } from "express";
 import { UserRol } from "../../domain/entities/user.entity";
+import { renderTemplate } from "../common/renderTemplate";
+import { htmlComponent } from "../common/renderHtml";
+import { CreateUserDto } from "../../domain/dtos/user/create-user.dto";
+import { AbsUserRepository } from "../../domain/repositories/user.repository";
+import { CreateUser } from "../../domain/uses-cases/user";
 
 export class ProfileController {
+  //*DI
+  constructor(private readonly repository: AbsUserRepository) {}
+
   public profile = (req: Request, res: Response) => {
     const user = req.user as any;
 
-    console.log("ESTOY AQUI EN PROFILE");
-    console.log(req.user);
-
     if (user.role === UserRol.ADMIN) {
       if (!user) {
-        return res.redirect("/login"); // Si no está autenticado, redirige al login
+        return res.redirect("/login");
       }
 
-      let formHtml = ""; // Variable para almacenar el formulario si es necesario
+      let dynamicContent = "";
 
-      // Mostrar el formulario de crear nuevo cliente
-      if (req.query.createClient === "true") {
-        formHtml = `
-      <h1>Create New Client</h1>
-      <form action="/profile" method="POST">
-        <label for="cedula">Cédula:</label>
-        <input type="text" id="cedula" name="cedula" required /><br />
-
-        <label for="coordinates">Coordinates:</label>
-        <input type="text" id="coordinates" name="coordinates" placeholder="Latitud, Longitud" required /><br />
-        
-        <label for="firstName">Nombres:</label>
-        <input type="text" id="firstName" name="firstName" required /><br />
-
-        <label for="lastName">Apellidos:</label>
-        <input type="text" id="lastName" name="lastName" required /><br />
-
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" name="email" required /><br />
-        
-        <button type="submit" name="action" value="createClient">Create Client</button>
-      </form>
-    `;
+      try {
+        if (req.query.clientOptions === "true") {
+          dynamicContent = htmlComponent(
+            "../profile/views/admin/clientOptions.html"
+          );
+        } else if (req.query.createClientForm === "true") {
+          dynamicContent = htmlComponent(
+            "../profile/views/admin/clients/createCllient.html"
+          );
+        } else if (req.query.deleteClientForm === "true") {
+          dynamicContent = htmlComponent(
+            "../profile/views/admin/clients/createCllient.html"
+          );
+        } else if (req.query.listClientsForm === "true") {
+          dynamicContent = htmlComponent(
+            "../profile/views/admin/clients/createCllient.html"
+          );
+        } else if (req.query.updateClientForm === "true") {
+          dynamicContent = htmlComponent(
+            "../profile/views/admin/clients/createCllient.html"
+          );
+        } else {
+          console.log("No valid query parameter detected.");
+        }
+      } catch (error) {
+        console.error("Error loading dynamic content:", error);
+        dynamicContent = `<h1>Error</h1><p>No se pudo cargar el contenido dinámico.</p>`;
       }
 
-      // Mostrar el formulario de crear nuevo sector
-      if (req.query.createSector === "true") {
-        formHtml = `
-      <h1>Create New Sector</h1>
-      <form action="/profile" method="POST">
-        <label for="sectorName">Nombre del Sector:</label>
-        <input type="text" id="sectorName" name="sectorName" required /><br />
+      // Renderizar la plantilla
+      //Como es un recurso que se encuentra en otro modulo necesitamos
+      //especificar la ruta relativa desde ese recurso
+      const html = renderTemplate(
+        "../profile/views/admin/adminDashboard.html",
+        {
+          displayName: user.displayName,
+          dynamicContent,
+        }
+      );
 
-        <label for="polygon">Polígono de Coordenadas:</label>
-        <textarea id="polygon" name="polygon" rows="4" cols="50" placeholder="((lat1,lon1),(lat2,lon2),...)" required></textarea><br />
-        
-        <button type="submit" name="action" value="createSector">Create Sector</button>
-      </form>
-    `;
-      }
-
-      // Mostrar el formulario de crear nueva interrupción
-      if (req.query.createInterruption === "true") {
-        formHtml = `
-      <h1>Create New Interruption</h1>
-      <form action="/profile" method="POST">
-        <label for="startTime">Hora de Inicio (24 horas):</label>
-        <input type="time" id="startTime" name="startTime" required /><br />
-        
-        <label for="endTime">Hora de Fin (24 horas):</label>
-        <input type="time" id="endTime" name="endTime" required /><br />
-
-        <label for="sector">Nombre del Sector:</label>
-        <input type="text" id="sector" name="sector" required /><br />
-        
-        <button type="submit" name="action" value="createInterruption">Create Interruption</button>
-      </form>
-    `;
-      }
-
-      // Responder con los botones y el formulario según sea necesario
-      res.send(`
-    <h1>Welcome ${user.displayName}</h1>
-    <p>You are logged in as an admin.</p>
-    <button><a href="/profile?createClient=true">Create New Client</a></button>
-    <button><a href="/profile?createSector=true">Create New Sector</a></button>
-    <button><a href="/profile?createInterruption=true">Create New Interruption</a></button>
-    
-    ${formHtml} <!-- Aquí se inserta el formulario dinámicamente -->
-  `);
+      res.send(html);
     } else if (user.role === UserRol.CLIENT) {
-      // Si es cliente, mostrar solo la opción para revisar interrupciones
       res.send(`
         <h1>Welcome ${user.displayName}</h1>
         <p>You are logged in as a client.</p>
@@ -95,5 +70,49 @@ export class ProfileController {
     } else {
       res.send(`<h1>Role not recognized</h1>`);
     }
+  };
+
+  // Manejar la creación de un cliente
+  public createClient = async (req: Request, res: Response) => {
+    console.log("ESTOY CREANDO UN CLEINTE");
+    const [error, createUserDto] = CreateUserDto.create(req.body);
+    if (error) res.status(400).json({ error: error });
+
+    new CreateUser(this.repository)
+      .exceute(createUserDto!)
+      .then((user) => res.json(user))
+      .catch((err) => res.status(404).json({ error: `${err}` }));
+
+    // // Redirigir después de crear el cliente
+    // return res.redirect("/profile?listClientsForm=true"); // Redirige a la lista de clientes
+  };
+
+  // Manejar la eliminación de un cliente
+  public deleteClient = (req: Request, res: Response) => {
+    const { cedula } = req.body;
+
+    // Aquí agregarías la lógica para eliminar el cliente de la base de datos
+    console.log("Cliente eliminado:", { cedula });
+
+    // Redirigir después de eliminar el cliente
+    res.redirect("/profile?listClients=true"); // Redirige a la lista de clientes
+  };
+
+  // Manejar la actualización de un cliente
+  public updateClient = (req: Request, res: Response) => {
+    const { cedula, newCoordinates, newFirstName, newLastName, newEmail } =
+      req.body;
+
+    // Aquí agregarías la lógica para actualizar los datos del cliente en la base de datos
+    console.log("Cliente actualizado:", {
+      cedula,
+      newCoordinates,
+      newFirstName,
+      newLastName,
+      newEmail,
+    });
+
+    // Redirigir después de actualizar el cliente
+    res.redirect("/profile?listClients=true"); // Redirige a la lista de clientes
   };
 }

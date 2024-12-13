@@ -7,19 +7,19 @@ import { AbsUserRepository } from "../../domain/repositories/user.repository";
 export class UserRepositoryImp implements AbsUserRepository {
   constructor(private readonly datasource: AbsUserDatasource) {}
 
-  create(createTodoDto: CreateUserDto): Promise<UserEntity> {
-    return this.datasource.create(createTodoDto);
+  create(createUserDto: CreateUserDto): Promise<UserEntity> {
+    return this.datasource.create(createUserDto);
   }
   getAll(): Promise<UserEntity[]> {
     return this.datasource.getAll();
   }
-  getById(id: number): Promise<UserEntity | undefined> {
-    return this.datasource.getById(id);
+  getById(idCard: string): Promise<UserEntity | undefined> {
+    return this.datasource.getById(idCard);
   }
-  update(updateTodoDto: UpdateUserDto): Promise<UserEntity | undefined> {
-    return this.datasource.update(updateTodoDto);
+  update(updateUserDto: UpdateUserDto): Promise<UserEntity | undefined> {
+    return this.datasource.update(updateUserDto);
   }
-  delete(id: number): Promise<UserEntity> {
-    return this.datasource.delete(id);
+  delete(idCard: string): Promise<UserEntity> {
+    return this.datasource.delete(idCard);
   }
 }

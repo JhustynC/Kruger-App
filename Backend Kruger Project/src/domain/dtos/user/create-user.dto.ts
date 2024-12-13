@@ -33,19 +33,25 @@ export class CreateUserDto {
 
     if (!coordinates) ["Address Coordinates is required", undefined];
     else {
-      if (!Array.isArray(coordinates)) {
-        return ["Address Coordinates must be an array", undefined];
-      }
-      if (coordinates.length !== 2) {
-        return [
-          "Address Coordinates must contain exactly 2 numbers",
-          undefined,
-        ];
+      try {
+        const parts = coordinates.split(",");
+        const coordinatesToArray = [parseFloat(parts[0]), parseFloat(parts[1])];
+        if (!Array.isArray(coordinatesToArray)) {
+          return ["Address Coordinates must be an array", undefined];
+        }
+        if (coordinatesToArray.length !== 2) {
+          return [
+            "Address Coordinates must contain exactly 2 numbers",
+            undefined,
+          ];
+        }
+      } catch {
+        return ["Error parsing address coordinates", undefined];
       }
     }
 
     if (!names) return ["Names is required", undefined];
-    if (names) {
+    else {
       if (typeof names !== "string") {
         return ["Names must be a string", undefined];
       }
@@ -61,7 +67,7 @@ export class CreateUserDto {
     }
 
     if (!surnames) return ["Surnames is required", undefined];
-    if (surnames) {
+    else{
       if (typeof surnames !== "string") {
         return ["Names must be a string", undefined];
       }
@@ -77,7 +83,7 @@ export class CreateUserDto {
     }
 
     if (!mail) return ["mail is required", undefined];
-    if (mail) {
+    else{
       if (typeof mail !== "string") {
         return ["Mail must be a string", undefined];
       }
@@ -93,9 +99,9 @@ export class CreateUserDto {
       }
     }
 
-    if (!username || typeof username !== "string") {
-      return ["Username must be a string", undefined];
-    }
+    // if (!username || typeof username !== "string") {
+    //   return ["Username must be a string", undefined];
+    // }
 
     if (!password || typeof password !== "string") {
       return ["Password must be a string", undefined];

@@ -3,16 +3,16 @@ import { UpdateUserDto } from "../dtos/user/update-user.dto";
 import { UserEntity } from "../entities/user.entity";
 
 export abstract class AbsUserRepository {
-  abstract create(createTodoDto: CreateUserDto): Promise<UserEntity>;
+  abstract create(createUserDto: CreateUserDto): Promise<UserEntity>;
 
   //Todo: paginación
   abstract getAll(): Promise<UserEntity[]>;
 
-  abstract getById(id: number): Promise<UserEntity | undefined>;
+  abstract getById(idCard: string): Promise<UserEntity | undefined>;
 
   abstract update(
-    updateTodoDto: UpdateUserDto
+    updateUserDto: UpdateUserDto
   ): Promise<UserEntity | undefined>;
 
-  abstract delete(id: number): Promise<UserEntity>;
+  abstract delete(idCard: string): Promise<UserEntity>;
 }

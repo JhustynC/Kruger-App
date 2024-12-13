@@ -21,12 +21,12 @@ export class AppRoutes {
     // router.use("/users", UserRoutes.routes);
 
     // Ruta para el perfil de usuario
-    router.use("/", ProfileRoutes.routes); 
+    router.use("/profile", ProfileRoutes.routes);
 
     // Middleware para manejar rutas desconocidas
     router.use((req, res) => {
       if (req.isAuthenticated()) {
-        res.redirect("/profile"); // Redirige al perfil si está autenticado
+        res.redirect("/profile/dashboard"); // Redirige al perfil si está autenticado
       } else {
         res.redirect("/auth/login"); // Redirige al login si no está autenticado
       }
