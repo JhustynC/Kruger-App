@@ -2,6 +2,7 @@ import { envs } from "./config/plugins/envs.plugin";
 import { AppRoutes } from "./presentation/routes";
 import { Server } from "./presentation/server";
 
+
 (async () => {
   main();
 })();

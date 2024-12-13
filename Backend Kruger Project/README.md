@@ -15,6 +15,11 @@ Ejemplo de body para el post de usuarios
 }
 ```
 
+Para probar rutas privadas (endpoints)
+Usar en el Header:
+Cookie - connect.sid=s%3AN2ZWlZKQrDyExMHauR_lnE9OcIg4Qfyr.EsGDJCn9x2F6bxRSmog4KVsS2blIvVEvWUBagBH3ZjU
+Este valor se puede conseguir en las cookies cuando se autentifiquen en la aplicación
+
 
 # Proyecto Kruger
 

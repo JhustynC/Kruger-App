@@ -8,6 +8,8 @@ import cors from "cors";
 import morgan from "morgan";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import { envs } from "../config/plugins/envs.plugin";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "../swagger/swagger";
 
 export interface Options {
   port: number;
@@ -34,6 +36,9 @@ export class Server {
   }
 
   async start() {
+    //*documentación swagger
+    this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
     //* Middlewares esenciales
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));

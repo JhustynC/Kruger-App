@@ -21,8 +21,7 @@ export class AppRoutes {
     // router.use("/users", UserRoutes.routes);
 
     // Ruta para el perfil de usuario
-    // Rutas de perfil
-    router.use("/", ProfileRoutes.routes); // Aquí la ruta de /profile es accesible
+    router.use("/", ProfileRoutes.routes); 
 
     // Middleware para manejar rutas desconocidas
     router.use((req, res) => {
