@@ -20,25 +20,33 @@ enum UserRol {
 }
 
 model User {
-  id          Int     @id @default(autoincrement())
-  idCard      String  @unique
+  id          Int      @id @default(autoincrement())
+  idCard      String   @unique
   coordinates String
   names       String
   surnames    String
-  mail        String  @unique
+  mail        String   @unique
   role        UserRol
   username    String
   password    String
+  user_id     Int     @default(0)
+  created_at  DateTime @default(now())
+  update_at   DateTime @default(now())
+  sectors     Sector[] @relation("UserSectors") // Relación con Sector
 }
 
 model Sector {
-  id        Int                    @id @default(autoincrement())
-  name      String
-  polygon   String
-  schedules InterruptionSchedule[]
+  id            Int            @id @default(autoincrement())
+  name          String
+  polygon       String
+  created_at    DateTime       @default(now())
+  update_at     DateTime       @default(now())
+  user_id       Int
+  user          User           @relation("UserSectors", fields: [user_id], references: [id]) // Relación con User
+  interruptions Interruption[] // Relación con Interruption
 }
 
-model InterruptionSchedule {
+model Interruption {
   id        Int      @id @default(autoincrement())
   startTime DateTime
   endTime   DateTime
