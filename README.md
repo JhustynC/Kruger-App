@@ -9,7 +9,7 @@ Aplicación para llevar un registro de los horarios de interrupción del servici
 
 ## Proceso de Desarrollo
 
-La aplicación está desarrollada en **Node.js** siguiendo los principios de **Clean Architecture**, con una estructura dividida en tres capas principales: **Presentation**, **Domain** e **Infrastructure**. Además, se aplica el patrón **MVC** para la implementación de los endpoints y las vistas (REST API).
+La aplicación está desarrollada en **Node.js** enfocada principalmente en el Backend (utilizando Express) siguiendo los principios de **Clean Architecture**, con una estructura dividida en tres capas principales: **Presentation**, **Domain** e **Infrastructure**. Además, se aplica el patrón **MVC** para la implementación de los endpoints y las vistas (REST API).
 
 La aplicación está diseñada para que el administrador pueda gestionar tres elementos principales:
 

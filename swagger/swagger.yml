@@ -5,7 +5,7 @@ info:
     API para la gestión de usuarios, sectores e interrupciones de luz.
   version: 1.0.0
 servers:
-  - url: https://api.tuservidor.com/admin
+  - url: http://localhost:3000
 tags:
   - name: admin
     description: Operaciones sobre clientes/usuarios
@@ -24,7 +24,7 @@ paths:
       description: Obtiene información general del dashboard
       operationId: getDashboard
       responses:
-        '200':
+        "200":
           description: Operación exitosa
           content:
             application/json:
@@ -34,11 +34,11 @@ paths:
                   message:
                     type: string
                     example: Dashboard de administración cargado
-        '401':
+        "401":
           description: No autorizado
-        '403':
+        "403":
           description: Acceso denegado
-  
+
   /:
     post:
       tags:
@@ -64,9 +64,9 @@ paths:
                 - name
                 - email
       responses:
-        '201':
+        "201":
           description: Usuario creado
-        '400':
+        "400":
           description: Datos inválidos
   /delete-user/{idCard}:
     get:
@@ -83,9 +83,9 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Usuario eliminado
-        '404':
+        "404":
           description: Usuario no encontrado
   /edit-user/{idCard}:
     get:
@@ -102,9 +102,9 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Datos del usuario
-        '404':
+        "404":
           description: Usuario no encontrado
   /update-user:
     post:
@@ -129,9 +129,9 @@ paths:
               required:
                 - idCard
       responses:
-        '200':
+        "200":
           description: Usuario actualizado
-        '400':
+        "400":
           description: Datos inválidos
   /create-sector:
     post:
@@ -152,9 +152,9 @@ paths:
               required:
                 - name
       responses:
-        '201':
+        "201":
           description: Sector creado
-        '400':
+        "400":
           description: Datos inválidos
   /delete-sector/{id}:
     get:
@@ -171,9 +171,9 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: Sector eliminado
-        '404':
+        "404":
           description: Sector no encontrado
   /edit-sector/{id}:
     get:
@@ -190,9 +190,9 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: Datos del sector
-        '404':
+        "404":
           description: Sector no encontrado
   /update-sector:
     post:
@@ -215,9 +215,9 @@ paths:
               required:
                 - id
       responses:
-        '200':
+        "200":
           description: Sector actualizado
-        '400':
+        "400":
           description: Datos inválidos
   /create-interruption:
     post:
@@ -238,9 +238,9 @@ paths:
               required:
                 - description
       responses:
-        '201':
+        "201":
           description: Interrupción creada
-        '400':
+        "400":
           description: Datos inválidos
   /delete-interruption/{id}:
     get:
@@ -257,9 +257,9 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: Interrupción eliminada
-        '404':
+        "404":
           description: Interrupción no encontrada
   /edit-interruption/{id}:
     get:
@@ -276,9 +276,9 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: Datos de la interrupción
-        '404':
+        "404":
           description: Interrupción no encontrada
   /update-interruption:
     post:
@@ -301,9 +301,9 @@ paths:
               required:
                 - id
       responses:
-        '200':
+        "200":
           description: Interrupción actualizada
-        '400':
+        "400":
           description: Datos inválidos
   client/fetch-interruption:
     post:
@@ -325,7 +325,7 @@ paths:
                   description: |
                     Coordenadas separadas por coma (por ejemplo: 40.7128, -74.0060)
       responses:
-        '200':
+        "200":
           description: Respuesta con las interrupciones encontradas.
           content:
             application/json:
@@ -343,11 +343,11 @@ paths:
                         endTime:
                           type: string
                           description: Hora de fin de la interrupción en formato HH:MM.
-        '404':
+        "404":
           description: No se encontraron interrupciones para las coordenadas proporcionadas.
-        '400':
+        "400":
           description: La solicitud no contiene coordenadas válidas.
-        '500':
+        "500":
           description: Error del servidor al procesar la solicitud.
   client/dashboard:
     get:
@@ -359,18 +359,18 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: Dashboard del cliente con interrupciones.
           content:
             text/html:
               schema:
                 type: string
                 example: "<html><body>Dashboard</body></html>"
-        '401':
+        "401":
           description: No autenticado. El usuario debe estar autenticado para acceder a este recurso.
-        '403':
+        "403":
           description: Correo electrónico no registrado. El usuario debe tener un correo electrónico registrado para acceder.
-  
+
 security:
   - bearerAuth: []
 components:
