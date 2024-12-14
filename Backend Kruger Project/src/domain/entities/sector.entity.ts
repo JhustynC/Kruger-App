@@ -25,6 +25,7 @@ export class SectorEntity {
   }
 
   static fromObject = (object: { [key: string]: any }): SectorEntity => {
+    console.log("CAMBIO EN SECTOR ENTITY CON EL ID");
     const { id, name, polygon } = object;
 
     let polygonArray: [number, number][] = [];
@@ -43,7 +44,7 @@ export class SectorEntity {
     } else if (!Array.isArray(polygon))
       throw new Error("Coordinates must be an array of numbers");
 
-    const sector = new SectorEntity(name, polygonArray);
+    const sector = new SectorEntity(name, polygonArray, id);
     return sector;
   };
 }

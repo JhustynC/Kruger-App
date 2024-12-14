@@ -13,22 +13,22 @@
     <h1>Revisión de Interrupciones de Luz</h1>
 
     <!-- Formulario para ingresar coordenadas -->
-    <form id="interruptionForm" method="POST" action="/revisar-interrupciones">
+    <form action="/client/fetch-interruption" method="POST">
       <label for="coordinates">Ingrese las coordenadas del domicilio:</label>
       <input type="text" id="coordinates" name="coordinates" placeholder="Ej: -2.90123, -79.00456" required>
-
       <button type="submit">Revisar Interrupciones</button>
     </form>
+
     <form action="/auth/logout" method="GET">
       <button type="submit">Log out</button>
     </form>
-    <!-- Tabla de resultados -->
+
+    <!-- Tabla de resultados de interrupciones -->
     <% if (interruptions && interruptions.length> 0) { %>
       <h2>Interrupciones detectadas</h2>
       <table>
         <thead>
           <tr>
-            <th>Nombre del Sector</th>
             <th>Hora de Inicio</th>
             <th>Hora de Fin</th>
           </tr>
@@ -36,9 +36,6 @@
         <tbody>
           <% interruptions.forEach(interruption=> { %>
             <tr>
-              <td>
-                <%= interruption.sector %>
-              </td>
               <td>
                 <%= interruption.startTime %>
               </td>

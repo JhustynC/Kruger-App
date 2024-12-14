@@ -49,7 +49,7 @@ export class Server {
       path.join(__dirname, "../presentation/auth/views"),
     ]); // Directorio donde se guardan las vistas
 
-    //*documentación swagger
+    //* Documentación Swagger
     this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     //* Middlewares esenciales
@@ -87,7 +87,7 @@ export class Server {
           profile: any,
           done: (err: any, user?: any) => void
         ) => {
-          console.log(profile);
+          // console.log(profile);
           return done(null, profile);
         }
       )

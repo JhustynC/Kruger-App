@@ -7,7 +7,7 @@ export interface IGetInterruptionUseCase {
   ): Promise<InterruptionEntity | undefined>;
 }
 
-export class GetInterruptioByCoordinates implements IGetInterruptionUseCase {
+export class GetInterruptionByCoordinates implements IGetInterruptionUseCase {
   constructor(public readonly repository: AbsInterruptionRepository) {}
 
   async exceute(

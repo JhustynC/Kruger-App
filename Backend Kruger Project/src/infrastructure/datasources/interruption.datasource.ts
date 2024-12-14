@@ -134,19 +134,29 @@ export class InterruptionDatasourceImp implements AbsInterruptionDatasource {
   async getByCoordinates(
     coordinates: [number, number]
   ): Promise<InterruptionEntity | undefined> {
+    console.log("CORDENADAS");
+    console.log(coordinates);
+
     const allSector = await this.getAllSectors();
     const sector = allSector.find((s) =>
       this.isInside(s.polygon, coordinates[0], coordinates[1])
     );
+
+    console.log("ESTE ES EL SECTOR");
+    console.log(sector);
 
     const allIntterruptions = await this.getAllInterruptions();
     const interruption = allIntterruptions.find(
       (i) => i.sectorId === sector?.id
     );
 
+    console.log("ESTE ES LA INTERRUPCION");
+    console.log(interruption);
+
     if (interruption) {
       return interruption;
     } else {
+      console.log("NO SE ENCOTRO CORTES PARA ESTAS COORDENADAS");
       return undefined;
     }
   }
