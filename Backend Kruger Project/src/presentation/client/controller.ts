@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { UserEntity, UserRol } from "../../domain/entities/user.entity";
 import { AbsUserRepository } from "../../domain/repositories/user.repository";
-import { prisma } from "../../config/data/postgres";
 
 export class ClientController {
   //*DI

@@ -73,7 +73,7 @@ export class Server {
       })
     );
 
-    //* Configuración de Passport
+    //* Configuración de Passport para OAuth 2.0
     passport.use(
       new GoogleStrategy(
         {

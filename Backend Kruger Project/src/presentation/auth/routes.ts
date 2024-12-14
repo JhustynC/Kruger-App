@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { Router } from "express";
 import { AuthController } from "./controller";
 import "dotenv/config";

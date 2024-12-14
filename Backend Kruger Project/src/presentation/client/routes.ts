@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { Request, Response } from "express";
 import {
   isAuthenticated,
   isEmailRegistered,
@@ -8,9 +7,6 @@ import {
 import { UserDatasourceImp } from "../../infrastructure/datasources/user.datasource";
 import { UserRepositoryImp } from "../../infrastructure/repositories/user.repository";
 import { ClientController } from "./controller";
-
-const asyncHandler = (fn: any) => (req: Request, res: Response, next: any) =>
-  Promise.resolve(fn(req, res, next)).catch(next);
 
 export class ClientRoutes {
   static get routes(): Router {

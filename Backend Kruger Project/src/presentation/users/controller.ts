@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction, Router } from "express";
+import { Request, Response } from "express";
 import { AbsUserRepository } from "../../domain/repositories/user.repository";
 import {
   CreateUser,

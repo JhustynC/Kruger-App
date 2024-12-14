@@ -25,16 +25,6 @@ export class ProfileRoutes {
       asyncHandler(profileController.roles)
     );
 
-    // Rutas para la gestion de usuarios
-    // router.post("/", profileController.createUser.bind(profileController));
-    // router.get("/delete-user/:idCard", profileController.deleteClient);
-    // router.get("/edit-user/:idCard", asyncHandler(profileController.editUser));
-    // router.post("/update-user", asyncHandler(profileController.updateUser));
-
-    // Rutas para la gestion de sectores
-
-    // Rutas para la gestion de interrupciones
-
     return router;
   }
 }

@@ -26,11 +26,12 @@ export class AppRoutes {
     router.get("/admin", isAuthenticated, (req, res) => {
       res.redirect("/admin/dashboard");
     });
+
     router.get("/client", isAuthenticated, (req, res) => {
       res.redirect("/client/dashboard");
     });
 
-    // Ruta para el perfil de usuario
+    // Ruta para el perfil de usuario segun roles
     router.get("/profile", isAuthenticated, (req, res) => {
       res.redirect("/profile/roles");
     });

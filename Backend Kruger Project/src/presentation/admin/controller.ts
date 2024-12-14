@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
-import { UserEntity, UserRol } from "../../domain/entities/user.entity";
+import { UserEntity } from "../../domain/entities/user.entity";
 import { CreateUserDto } from "../../domain/dtos/user/create-user.dto";
 import { AbsUserRepository } from "../../domain/repositories/user.repository";
 import {
   CreateUser,
   DeleteUser,
-  GetUser,
   GetUsers,
   UpdateUser,
 } from "../../domain/uses-cases/user";
@@ -30,6 +29,7 @@ export class AdminController {
     private readonly repositoryInterrupton: AbsInterruptionRepository
   ) {}
 
+  //! Para la vista del Administrador
   public dasboard = async (req: Request, res: Response) => {
     const user = req.user as any; // Asegúrate de que 'req.user' contiene la información correcta
 
