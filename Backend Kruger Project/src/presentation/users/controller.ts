@@ -9,10 +9,14 @@ import {
 } from "../../domain/uses-cases/user";
 import { CreateUserDto } from "../../domain/dtos/user/create-user.dto";
 import { UpdateUserDto } from "../../domain/dtos/user/update-user.dto";
+import { AbsLogRepository } from "../../domain/repositories/log.repository";
 
 export class UserController {
   //*DI
-  constructor(private readonly repository: AbsUserRepository) {}
+  constructor(
+    private readonly repository: AbsUserRepository,
+    private readonly repositoryLogs: AbsLogRepository
+  ) {}
 
   public getUsers = (req: Request, res: Response) => {
     new GetUsers(this.repository)
@@ -33,7 +37,7 @@ export class UserController {
     const [error, createUserDto] = CreateUserDto.create(req.body);
     if (error) res.status(400).json({ error: error });
 
-    new CreateUser(this.repository)
+    new CreateUser(this.repository, this.repositoryLogs)
       .exceute(createUserDto!)
       .then((user) => res.json(user))
       .catch((err) => res.status(404).json({ error: `${err}` }));
@@ -45,7 +49,7 @@ export class UserController {
     if (error) res.status(400).json({ error });
 
     //? Using Prisma ORM
-    new UpdateUser(this.repository)
+    new UpdateUser(this.repository, this.repositoryLogs)
       .exceute(updateUserDto!)
       .then((user) => res.json(user))
       .catch((err) => res.status(404).json({ error: `${err}` }));
@@ -55,7 +59,7 @@ export class UserController {
     const id = +req.params.id;
     if (isNaN(id)) res.status(400).json({ error: "Invalid ID" });
 
-    new DeleteUser(this.repository)
+    new DeleteUser(this.repository, this.repositoryLogs)
       .exceute(id.toFixed(2))
       .then((user) => res.json(user))
       .catch((err) => res.status(400).json({ error: `${err}` }));

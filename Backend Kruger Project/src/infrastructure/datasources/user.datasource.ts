@@ -12,6 +12,7 @@ const rolesDB = {
 };
 
 export class UserDatasourceImp implements AbsUserDatasource {
+
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     const { coordinates, role } = createUserDto;
     const coordinatesToString = `${coordinates[0]}, ${coordinates[1]}`;

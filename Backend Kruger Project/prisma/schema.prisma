@@ -53,3 +53,17 @@ model Interruption {
   sectorId  Int
   sector    Sector   @relation(fields: [sectorId], references: [id])
 }
+
+enum SeverityLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model LogModel {
+  id       Int           @id @default(autoincrement())
+  message  String
+  origin   String
+  level    SeverityLevel
+  createAt DateTime      @default(now())
+}

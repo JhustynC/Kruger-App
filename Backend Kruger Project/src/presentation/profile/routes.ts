@@ -7,6 +7,8 @@ import {
 import { ProfileController } from "./controller";
 import { UserDatasourceImp } from "../../infrastructure/datasources/user.datasource";
 import { UserRepositoryImp } from "../../infrastructure/repositories/user.repository";
+import { LogRepositoryImpl } from "../../infrastructure/repositories/log.repository.imp";
+import { FileSystemDatasource } from "../../infrastructure/datasources/file-system.datasources";
 
 const asyncHandler = (fn: any) => (req: Request, res: Response, next: any) =>
   Promise.resolve(fn(req, res, next)).catch(next);
@@ -14,8 +16,8 @@ const asyncHandler = (fn: any) => (req: Request, res: Response, next: any) =>
 export class ProfileRoutes {
   static get routes(): Router {
     const router = Router();
-    const userRepository = new UserRepositoryImp(new UserDatasourceImp());
-    const profileController = new ProfileController(userRepository);
+    const logsRepositoy = new LogRepositoryImpl(new FileSystemDatasource());
+    const profileController = new ProfileController(logsRepositoy);
 
     // Ruta para optener las opciones del administrador
     router.get(

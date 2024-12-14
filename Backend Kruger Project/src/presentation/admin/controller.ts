@@ -22,12 +22,14 @@ import { DeleteInterruption } from "../../domain/uses-cases/interruption/delete-
 import { UpdateInterruptionDto } from "../../domain/dtos/interruption/update-interruption.dto";
 import { UpdateInterruption } from "../../domain/uses-cases/interruption/update-interruption.usecase";
 import { InterruptionEntity } from "../../domain/entities/interruption.entity";
+import { AbsLogRepository } from "../../domain/repositories/log.repository";
 
 export class AdminController {
   //*DI
   constructor(
     private readonly repositoryUser: AbsUserRepository,
-    private readonly repositoryInterrupton: AbsInterruptionRepository
+    private readonly repositoryInterrupton: AbsInterruptionRepository,
+    private readonly repositoryLogs: AbsLogRepository
   ) {}
 
   //! Para la vista del Administrador
@@ -109,7 +111,7 @@ export class AdminController {
     const [error, createUserDto] = CreateUserDto.create(req.body);
     if (error) res.status(400).json({ error: error });
 
-    new CreateUser(this.repositoryUser)
+    new CreateUser(this.repositoryUser, this.repositoryLogs)
       .exceute(createUserDto!)
       .then(() => res.redirect("/admin/dashboard?clientOptions=true")) // Redirige a la lista de clientes
       .catch((err) => res.status(404).json({ error: `${err}` }));
@@ -119,7 +121,7 @@ export class AdminController {
   public deleteClient = (req: Request, res: Response) => {
     const { idCard } = req.params;
 
-    new DeleteUser(this.repositoryUser)
+    new DeleteUser(this.repositoryUser, this.repositoryLogs)
       .exceute(idCard)
       .then(() =>
         res.redirect(
@@ -154,7 +156,7 @@ export class AdminController {
     });
     if (error) return res.status(400).json({ error });
 
-    new UpdateUser(this.repositoryUser)
+    new UpdateUser(this.repositoryUser, this.repositoryLogs)
       .exceute(updateUserDto!)
       .then((user) => res.redirect("/admin/dashboard?listClientsForm=true"))
       .catch((err) => res.status(404).json({ error: `${err}` }));
@@ -175,7 +177,7 @@ export class AdminController {
     const [error, createSectorDto] = CreateSectorDto.create(req.body);
     if (error) res.status(400).json({ error: error });
 
-    new CreateSector(this.repositoryInterrupton)
+    new CreateSector(this.repositoryInterrupton, this.repositoryLogs)
       .exceute(createSectorDto!)
       .then((sector) => {
         res.redirect("/admin/dashboard?sectorOptions=true"); // Redirige a la lista de clientes
@@ -186,7 +188,7 @@ export class AdminController {
   public deleteSector = (req: Request, res: Response) => {
     const { id } = req.params;
 
-    new DeleteSector(this.repositoryInterrupton)
+    new DeleteSector(this.repositoryInterrupton, this.repositoryLogs)
       .exceute(+id)
       .then(() =>
         res.redirect(
@@ -223,7 +225,7 @@ export class AdminController {
     });
     if (error) return res.status(400).json({ error });
 
-    new UpdateSector(this.repositoryInterrupton)
+    new UpdateSector(this.repositoryInterrupton, this.repositoryLogs)
       .exceute(updateSectorDto!)
       .then(() => res.redirect("/admin/dashboard?listSectorsForm=true"))
       .catch((err) => res.status(404).json({ error: `${err}` }));

@@ -6,6 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log in</title>
   <style>
+    .google-login {
+      font-size: 20px;
+      /* Ajusta el tamaño del texto */
+      font-weight: bold;
+      /* Hace el texto más grueso */
+      text-decoration: none;
+      /* Elimina el subrayado */
+      padding: 10px 20px;
+      /* Añade espacio interno */
+      border-radius: 5px;
+      /* Bordes redondeados */
+      display: inline-block;
+      /* Necesario para el degradado */
+      background: linear-gradient(90deg, #4285F4, #34A853, #FBBC05, #EA4335);
+      background-clip: text;
+      /* Aplica el degradado solo al texto */
+      -webkit-background-clip: text;
+      /* Para compatibilidad en navegadores WebKit */
+      color: transparent;
+      /* Hace el texto transparente para mostrar el degradado */
+      transition: transform 0.2s;
+      /* Añade una animación para el hover */
+    }
+
+    .google-login:hover {
+      transform: scale(1.1);
+      /* Aumenta ligeramente el tamaño al pasar el cursor */
+    }
+
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
@@ -96,7 +125,7 @@
     </div>
     <button type="submit">Log in</button>
   </form>
-  <a href='/auth/google'>Log in with Google</a>
+  <a href='/auth/google' class="google-login">Log in with Google</a>
 </body>
 
 </html>

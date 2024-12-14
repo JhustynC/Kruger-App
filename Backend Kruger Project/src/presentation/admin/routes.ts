@@ -10,6 +10,8 @@ import { UserRepositoryImp } from "../../infrastructure/repositories/user.reposi
 import { AdminController } from "./controller";
 import { InterruptionRepositoryImp } from "../../infrastructure/repositories/interruption.repository";
 import { InterruptionDatasourceImp } from "../../infrastructure/datasources/interruption.datasource";
+import { LogRepositoryImpl } from "../../infrastructure/repositories/log.repository.imp";
+import { FileSystemDatasource } from "../../infrastructure/datasources/file-system.datasources";
 
 const asyncHandler = (fn: any) => (req: Request, res: Response, next: any) =>
   Promise.resolve(fn(req, res, next)).catch(next);
@@ -21,9 +23,11 @@ export class AdminRoutes {
     const interruptionRepository = new InterruptionRepositoryImp(
       new InterruptionDatasourceImp()
     );
+    const logsRepositoy = new LogRepositoryImpl(new FileSystemDatasource());
     const adminController = new AdminController(
       userRepository,
-      interruptionRepository
+      interruptionRepository,
+      logsRepositoy
     );
 
     router.get(

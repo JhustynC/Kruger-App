@@ -36,7 +36,7 @@ export class AuthController {
         if (err) {
           return res.status(500).send("Error during login");
         }
-
+        
         // Redirigir al perfil si todo es correcto
         return res.redirect("/profile");
       });
