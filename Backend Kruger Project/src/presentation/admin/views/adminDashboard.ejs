@@ -188,13 +188,13 @@
   <div class="create-interruption-form">
     <% if (createInterruptionForm==='true' ) { %>
       <h2>Crear Nueva Interrupción</h2>
-      <form action="/admin" method="POST">
+      <form action="/admin/create-interruption" method="POST">
 
         <label for="startTime">Hora de Inicio:</label>
-        <input type="datetime-local" id="startTime" name="startTime" required /><br />
+        <input type="time" id="startTime" name="startTime" required /><br />
 
         <label for="endTime">Hora de Fin:</label>
-        <input type="datetime-local" id="endTime" name="endTime" required /><br />
+        <input type="time" id="endTime" name="endTime" required /><br />
 
         <label for="sectorId">ID del Sector:</label>
         <input type="number" id="sectorId" name="sectorId" required /><br />

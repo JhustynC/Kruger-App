@@ -2,7 +2,7 @@ export class UpdateSectorDto {
   private constructor(
     public readonly id: number,
     public readonly name: string,
-    public readonly polygon: [number, number][] = []
+    public readonly polygon: string
   ) {}
 
   public get values() {
@@ -22,10 +22,17 @@ export class UpdateSectorDto {
   }
 
   static create(props: { [key: string]: any }): [string?, UpdateSectorDto?] {
-    const { id, name, polygon } = props;
+    let { id, name, polygon } = props;
     let polygonArray: [number, number][] = [];
 
     // Validación del id
+    if (id) {
+      try {
+        id = parseInt(id);
+      } catch (e) {
+        return ["ID must be a valid number", undefined];
+      }
+    }
     if (!id || typeof id !== "number") {
       return ["ID must be a valid number", undefined];
     }
@@ -64,10 +71,9 @@ export class UpdateSectorDto {
         undefined,
       ];
     } else {
-      polygonArray = polygon;
     }
 
-    return [undefined, new UpdateSectorDto(id, name, polygonArray)];
+    return [undefined, new UpdateSectorDto(id, name, polygon.toString())];
   }
 
   // Método de conversión de coordenadas (se puede reutilizar del modelo original)

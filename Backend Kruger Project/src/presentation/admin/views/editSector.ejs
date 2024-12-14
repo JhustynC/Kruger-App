@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Sector</title>
+</head>
+
+<body>
+  <h1>Editar Sector</h1>
+  <form action="/admin/update-sector" method="POST">
+    <div>
+      <label for="id">ID del Sector:</label>
+      <input type="text" name="id" id="id" value="<%= sector.id %>" readonly>
+    </div>
+    <div>
+      <label for="name">Nombre del Sector:</label>
+      <input type="text" name="name" id="name" value="<%= sector.name %>" required>
+    </div>
+    <div>
+      <label for="polygon">Polígono (coordenadas):</label>
+      <textarea name="polygon" id="polygon" rows="5" required><%= sector.polygon %></textarea>
+    </div>
+    <button type="submit" name="action" value="updateSector">Guardar Cambios</button>
+  </form>
+  <a href="/admin/dashboard?listSectorsForm=true">Cancelar</a>
+</body>
+
+</html>

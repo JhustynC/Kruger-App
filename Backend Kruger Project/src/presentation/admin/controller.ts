@@ -21,6 +21,7 @@ import { CreateInterruptionDto } from "../../domain/dtos/interruption/create-int
 import { DeleteInterruption } from "../../domain/uses-cases/interruption/delete-interruption.usecase";
 import { UpdateInterruptionDto } from "../../domain/dtos/interruption/update-interruption.dto";
 import { UpdateInterruption } from "../../domain/uses-cases/interruption/update-interruption.usecase";
+import { InterruptionEntity } from "../../domain/entities/interruption.entity";
 
 export class AdminController {
   //*DI
@@ -229,9 +230,13 @@ export class AdminController {
   };
   //----------------------------------------------------------------
   public createInterruption = async (req: Request, res: Response) => {
+    console.log(req.body);
     const [error, createInterruptionDto] = CreateInterruptionDto.create(
       req.body
     );
+    console.log("ESTO ES DEPUES DE DTO");
+    console.log(error);
+
     if (error) res.status(400).json({ error: error });
 
     new CreateInterruption(this.repositoryInterrupton)
@@ -257,15 +262,25 @@ export class AdminController {
     const { id } = req.params;
 
     try {
-      const user = await prisma.interruption.findUnique({
+      const interruptionDb = await prisma.interruption.findUnique({
         where: { id: +id },
       });
 
-      if (!user) {
+      if (!interruptionDb) {
         return res.status(404).send("Interrupcion no encontrada");
       }
+      console.log(interruptionDb);
+      const interruption = {
+        ...interruptionDb,
+        startTime: InterruptionEntity.formatTimeToHHMM(
+          interruptionDb.startTime.toString()
+        ),
+        endTime: InterruptionEntity.formatTimeToHHMM(
+          interruptionDb.endTime.toString()
+        ),
+      };
 
-      return res.render("editInterruption", { user }); // Renderiza el formulario con los datos del usuario
+      return res.render("editInterruption", { interruption }); // Renderiza el formulario con los datos del usuario
     } catch (error) {
       console.error(error);
       return res
@@ -275,9 +290,12 @@ export class AdminController {
   };
 
   public updateInterruption = async (req: Request, res: Response) => {
+    console.log(req.body);
     const [error, updateInterruptionDto] = UpdateInterruptionDto.create({
       ...req.body,
     });
+
+    console.log(`Esto es del error: ${error}`);
     if (error) return res.status(400).json({ error });
 
     new UpdateInterruption(this.repositoryInterrupton)
