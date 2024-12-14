@@ -19,7 +19,9 @@
 
       <button type="submit">Revisar Interrupciones</button>
     </form>
-
+    <form action="/auth/logout" method="GET">
+      <button type="submit">Log out</button>
+    </form>
     <!-- Tabla de resultados -->
     <% if (interruptions && interruptions.length> 0) { %>
       <h2>Interrupciones detectadas</h2>
