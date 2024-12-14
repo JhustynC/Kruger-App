@@ -8,6 +8,8 @@ import {
 import { UserDatasourceImp } from "../../infrastructure/datasources/user.datasource";
 import { UserRepositoryImp } from "../../infrastructure/repositories/user.repository";
 import { AdminController } from "./controller";
+import { InterruptionRepositoryImp } from "../../infrastructure/repositories/interruption.repository";
+import { InterruptionDatasourceImp } from "../../infrastructure/datasources/interruption.datasource";
 
 const asyncHandler = (fn: any) => (req: Request, res: Response, next: any) =>
   Promise.resolve(fn(req, res, next)).catch(next);
@@ -16,7 +18,13 @@ export class AdminRoutes {
   static get routes(): Router {
     const router = Router();
     const userRepository = new UserRepositoryImp(new UserDatasourceImp());
-    const adminController = new AdminController(userRepository);
+    const interruptionRepository = new InterruptionRepositoryImp(
+      new InterruptionDatasourceImp()
+    );
+    const adminController = new AdminController(
+      userRepository,
+      interruptionRepository
+    );
 
     router.get(
       "/dashboard",
@@ -32,8 +40,25 @@ export class AdminRoutes {
     router.post("/update-user", asyncHandler(adminController.updateUser));
 
     // Rutas para la gestion de sectores
+    router.post("/create-sector", adminController.createSector);
+    router.get("/delete-sector/:id", adminController.deleteSector);
+    router.get("/edit-sector/:id", asyncHandler(adminController.editSector));
+    router.post("/update-sector", asyncHandler(adminController.updateSector));
 
     // Rutas para la gestion de interrupciones
+    router.post(
+      "/create-interruption",
+      adminController.createInterruption.bind(adminController)
+    );
+    router.get("/delete-interruption/:id", adminController.deleteInterruption);
+    router.get(
+      "/edit-interruption/:id",
+      asyncHandler(adminController.editInterruption)
+    );
+    router.post(
+      "/upate-interruption",
+      asyncHandler(adminController.updateInterruption)
+    );
 
     return router;
   }

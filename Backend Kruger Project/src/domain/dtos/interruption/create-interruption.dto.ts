@@ -1,9 +1,9 @@
 export class CreateInterruptionDto {
   private constructor(
-    public readonly id: number,
     public readonly startTime: string,
     public readonly endTime: string,
-    public readonly sectorId: number
+    public readonly sectorId: number,
+    public readonly id?: number
   ) {}
 
   static create(props: {
@@ -38,6 +38,9 @@ export class CreateInterruptionDto {
       }
     }
 
-    return [undefined, new CreateInterruptionDto(id, startTime, endTime, sectorId)];
+    return [
+      undefined,
+      new CreateInterruptionDto(startTime, endTime, sectorId, id),
+    ];
   }
 }

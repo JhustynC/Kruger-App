@@ -1,19 +1,19 @@
 export class SectorEntity {
   constructor(
-    public readonly id: number,
     public readonly name: string,
-    public readonly polygon: [number, number][] = []
+    public readonly polygon: [number, number][] = [],
+    public readonly id?: number
   ) {}
 
   static polygonStringToArray(texto: string): [number, number][] {
-    // Utilizamos una expresión regular para extraer las tuplas
-    const regex = /\((\d+\.\d+),(\d+\.\d+)\)/g;
+    // Expresión regular para capturar números decimales o enteros dentro de paréntesis
+    const regex = /\((\d+(?:\.\d+)?),(\d+(?:\.\d+)?)\)/g;
     let resultado: [number, number][] = [];
     let match;
 
-    // Buscamos todas las coincidencias de la expresión regular
+    // Extraemos todas las coincidencias de la expresión regular
     while ((match = regex.exec(texto)) !== null) {
-      // match[1] y match[2] son las partes que corresponden a los números
+      // Convertimos las cadenas extraídas en números
       const num1 = parseFloat(match[1]);
       const num2 = parseFloat(match[2]);
 
@@ -26,11 +26,10 @@ export class SectorEntity {
 
   static fromObject = (object: { [key: string]: any }): SectorEntity => {
     const { id, name, polygon } = object;
+
     let polygonArray: [number, number][] = [];
 
-    if (!id || typeof id !== "number") throw new Error("Sector id errro");
-
-    if (!name || typeof name === "string")
+    if (!name || typeof name !== "string")
       throw new Error("Sector name is required");
     if (!polygon) throw new Error("Polygon are required");
 
@@ -44,7 +43,7 @@ export class SectorEntity {
     } else if (!Array.isArray(polygon))
       throw new Error("Coordinates must be an array of numbers");
 
-    const sector = new SectorEntity(id, name, polygonArray);
+    const sector = new SectorEntity(name, polygonArray);
     return sector;
   };
 }

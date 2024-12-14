@@ -127,7 +127,126 @@
       <% } %>
   </div>
 
+  <!-- Formulario de Crear Sector -->
+  <div class="create-sector-form">
+    <% if (createSectorForm==='true' ) { %>
+      <h2>Crear Nuevo Sector</h2>
+      <form action="/admin/create-sector" method="POST">
 
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required /><br />
+
+        <label for="polygon">Polígono (Formato: (lat1, lon1), (lat2, lon2), ...):</label>
+        <input type="text" id="polygon" name="polygon" required /><br />
+
+        <button type="submit" name="action" value="createSector">Crear Sector</button>
+      </form>
+      <% } %>
+  </div>
+
+  <!-- Formulario para Listar Sectores -->
+  <div class="list-sectors-form">
+    <% if (listSectorsForm==='true' ) { %>
+      <h2>Lista de Sectores</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Actions</th>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Polígono</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% sectors.forEach(function(sector) { %>
+            <tr>
+              <td>
+                <button>
+                  <a href="/admin/edit-sector/<%= sector.id %>"
+                    style="text-decoration: none; color: rgb(0, 91, 209);">Edit</a>
+                </button>
+                <button><a href="/admin/delete-sector/<%= sector.id %>"
+                    style="text-decoration: none; color: rgb(231, 10, 10);">Delete</a></button>
+              </td>
+              <td>
+                <%= sector.id %>
+              </td>
+              <td>
+                <%= sector.name %>
+              </td>
+              <td>
+                <%= sector.polygon %>
+              </td>
+            </tr>
+            <% }); %>
+        </tbody>
+      </table>
+      <% } %>
+  </div>
+
+  <!-- Formulario de Crear Interrupción -->
+  <div class="create-interruption-form">
+    <% if (createInterruptionForm==='true' ) { %>
+      <h2>Crear Nueva Interrupción</h2>
+      <form action="/admin" method="POST">
+
+        <label for="startTime">Hora de Inicio:</label>
+        <input type="datetime-local" id="startTime" name="startTime" required /><br />
+
+        <label for="endTime">Hora de Fin:</label>
+        <input type="datetime-local" id="endTime" name="endTime" required /><br />
+
+        <label for="sectorId">ID del Sector:</label>
+        <input type="number" id="sectorId" name="sectorId" required /><br />
+
+        <button type="submit" name="action" value="createInterruption">Crear Interrupción</button>
+      </form>
+      <% } %>
+  </div>
+
+  <!-- Formulario para Listar Interrupciones -->
+  <div class="list-interruptions-form">
+    <% if (listInterruptionsForm==='true' ) { %>
+      <h2>Lista de Interrupciones</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Actions</th>
+            <th>ID</th>
+            <th>Hora de Inicio</th>
+            <th>Hora de Fin</th>
+            <th>ID del Sector</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% interruptions.forEach(function(interruption) { %>
+            <tr>
+              <td>
+                <button>
+                  <a href="/admin/edit-interruption/<%= interruption.id %>"
+                    style="text-decoration: none; color: rgb(0, 91, 209);">Edit</a>
+                </button>
+                <button><a href="/admin/delete-interruption/<%= interruption.id %>"
+                    style="text-decoration: none; color: rgb(231, 10, 10);">Delete</a></button>
+              </td>
+              <td>
+                <%= interruption.id %>
+              </td>
+              <td>
+                <%= interruption.startTime %>
+              </td>
+              <td>
+                <%= interruption.endTime %>
+              </td>
+              <td>
+                <%= interruption.sectorId %>
+              </td>
+            </tr>
+            <% }); %>
+        </tbody>
+      </table>
+      <% } %>
+  </div>
 </body>
 
 </html>

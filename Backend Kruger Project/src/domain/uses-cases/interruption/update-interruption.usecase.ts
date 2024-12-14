@@ -8,7 +8,7 @@ export interface IUpdateInterruptionUseCase {
   ): Promise<InterruptionEntity>;
 }
 
-export class GetSectorSector implements IUpdateInterruptionUseCase {
+export class UpdateInterruption implements IUpdateInterruptionUseCase {
   constructor(public readonly repository: AbsInterruptionRepository) {}
 
   async exceute(

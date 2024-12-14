@@ -14,6 +14,7 @@ export abstract class AbsInterruptionRepository {
   abstract createSector(
     createSectorDto: CreateSectorDto
   ): Promise<SectorEntity>;
+  
   abstract updateSector(
     updateSectorDto: UpdateSectorDto
   ): Promise<SectorEntity>;

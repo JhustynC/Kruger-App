@@ -1,31 +1,35 @@
 export class CreateSectorDto {
   private constructor(
-    public readonly id: number,
     public readonly name: string,
-    public readonly polygon: [number, number][]
+    public readonly polygon: [number, number][],
+    public readonly id?: number
   ) {}
 
-  static polygonStringToArray(polygon: string): [number, number][] {
-    const regex = /\((\d+\.\d+),(\d+\.\d+)\)/g;
-    const result: [number, number][] = [];
+  static polygonStringToArray(texto: string): [number, number][] {
+    // Expresión regular para capturar números decimales o enteros dentro de paréntesis
+    const regex = /\((\d+(?:\.\d+)?),(\d+(?:\.\d+)?)\)/g;
+    let resultado: [number, number][] = [];
     let match;
 
-    while ((match = regex.exec(polygon)) !== null) {
-      result.push([parseFloat(match[1]), parseFloat(match[2])]);
+    // Extraemos todas las coincidencias de la expresión regular
+    while ((match = regex.exec(texto)) !== null) {
+      // Convertimos las cadenas extraídas en números
+      const num1 = parseFloat(match[1]);
+      const num2 = parseFloat(match[2]);
+
+      // Agregamos la tupla de números al array resultado
+      resultado.push([num1, num2]);
     }
 
-    return result;
+    return resultado;
   }
 
   static create(props: { [key: string]: any }): [string?, CreateSectorDto?] {
-    const { id, name, polygon } = props;
-
-    if (!id) {
-      return ["Id is required", undefined];
-    }
-    if (typeof id !== "number" || isNaN(id)) {
-      return ["Id must be a valid number", undefined];
-    }
+    const { name, polygon } = props;
+    console.log(polygon);
+    const polygonArray = this.polygonStringToArray(polygon);
+    console.log("EN EL DTO POLYGON");
+    console.log(polygonArray);
 
     if (!name) {
       return ["Name is required", undefined];
@@ -37,37 +41,10 @@ export class CreateSectorDto {
       return ["Name must be between 2 and 100 characters", undefined];
     }
 
-    let polygonArray: [number, number][] = [];
-
     if (!polygon) {
       return ["Polygon is required", undefined];
     }
 
-    if (typeof polygon === "string") {
-      try {
-        polygonArray = this.polygonStringToArray(polygon);
-      } catch {
-        return ["Error parsing polygon string", undefined];
-      }
-    } else if (Array.isArray(polygon)) {
-      if (
-        !polygon.every(
-          (pair) =>
-            Array.isArray(pair) &&
-            pair.length === 2 &&
-            pair.every((coord) => typeof coord === "number" && !isNaN(coord))
-        )
-      ) {
-        return [
-          "Polygon must be an array of [number, number] pairs",
-          undefined,
-        ];
-      }
-      polygonArray = polygon;
-    } else {
-      return ["Polygon must be a string or an array", undefined];
-    }
-
-    return [undefined, new CreateSectorDto(id, name, polygonArray)];
+    return [undefined, new CreateSectorDto(name, polygonArray)];
   }
 }

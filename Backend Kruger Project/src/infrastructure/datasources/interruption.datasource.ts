@@ -9,15 +9,21 @@ import { UpdateSectorDto } from "../../domain/dtos/sector/update-sector.dto";
 
 export class InterruptionDatasourceImp implements AbsInterruptionDatasource {
   async createSector(createSectorDto: CreateSectorDto): Promise<SectorEntity> {
+    console.log("EN EL DATASOURCE");
+    console.log(createSectorDto);
     const { id, name, polygon } = createSectorDto;
 
     const polygonString = polygon.map(([x, y]) => `(${x},${y})`).join(",");
+    console.log(polygonString);
 
     const sector = await prisma.sector.create({
-      data: { name, polygon: polygonString },
+      data: { name: createSectorDto.name, polygon: polygonString },
     });
 
-    return SectorEntity.fromObject(sector);
+    if (sector) {
+      return SectorEntity.fromObject(sector);
+    }
+    throw new Error("Error creating sector");
   }
 
   async getById(id: number): Promise<SectorEntity> {
