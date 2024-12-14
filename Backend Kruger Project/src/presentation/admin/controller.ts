@@ -290,12 +290,13 @@ export class AdminController {
   };
 
   public updateInterruption = async (req: Request, res: Response) => {
+    console.log("Valores del formulario");
     console.log(req.body);
     const [error, updateInterruptionDto] = UpdateInterruptionDto.create({
       ...req.body,
     });
 
-    console.log(`Esto es del error: ${error}`);
+    console.log(`Esto es del error de UPDATE: ${error}`);
     if (error) return res.status(400).json({ error });
 
     new UpdateInterruption(this.repositoryInterrupton)

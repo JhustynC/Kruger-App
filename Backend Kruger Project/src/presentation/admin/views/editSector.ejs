@@ -1,30 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Sector</title>
+  <title>Editar Sector</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    div {
+      margin-bottom: 15px;
+    }
+
+    label {
+      margin-bottom: 8px;
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    input[type="text"],
+    textarea {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: #007bff;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-align: center;
+      color: #007bff;
+      text-decoration: none;
+      font-size: 1.1em;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #0056b3;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Editar Sector</h1>
-  <form action="/admin/update-sector" method="POST">
-    <div>
-      <label for="id">ID del Sector:</label>
-      <input type="text" name="id" id="id" value="<%= sector.id %>" readonly>
-    </div>
-    <div>
-      <label for="name">Nombre del Sector:</label>
-      <input type="text" name="name" id="name" value="<%= sector.name %>" required>
-    </div>
-    <div>
-      <label for="polygon">Polígono (coordenadas):</label>
-      <textarea name="polygon" id="polygon" rows="5" required><%= sector.polygon %></textarea>
-    </div>
-    <button type="submit" name="action" value="updateSector">Guardar Cambios</button>
-  </form>
-  <a href="/admin/dashboard?listSectorsForm=true">Cancelar</a>
+  <div class="container">
+    <h1>Editar Sector</h1>
+
+    <form action="/admin/update-sector" method="POST">
+      <div>
+        <label for="id">ID del Sector:</label>
+        <input type="text" name="id" id="id" value="<%= sector.id %>" required>
+      </div>
+      <div>
+        <label for="name">Nombre del Sector:</label>
+        <input type="text" name="name" id="name" value="<%= sector.name %>" required>
+      </div>
+      <div>
+        <label for="polygon">Polígono (coordenadas):</label>
+        <textarea name="polygon" id="polygon" rows="5" required><%= sector.polygon %></textarea>
+      </div>
+      <button type="submit" name="action" value="updateSector">Guardar Cambios</button>
+    </form>
+    <a href="/admin/dashboard?listSectorsForm=true">Cancelar</a>
+  </div>
 </body>
 
 </html>

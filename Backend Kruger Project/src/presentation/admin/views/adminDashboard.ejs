@@ -1,254 +1,379 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
+  <style>
+    /* Estilo para el botón de Cerrar sesión */
+    .logout-btn {
+      position: fixed;
+      top: 20px;
+      /* Separación del borde superior */
+      right: 20px;
+      /* Separación del borde derecho */
+      padding: 8px 16px;
+      /* Tamaño razonable de padding */
+      font-size: 14px;
+      /* Tamaño de fuente adecuado */
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1000;
+      /* Asegura que esté por encima de otros elementos */
+      width: auto;
+      /* Asegura que el ancho se ajuste al contenido */
+      white-space: nowrap;
+      /* Evita que el texto se divida en varias líneas */
+    }
+
+    .logout-btn:hover {
+      background-color: #0056b3;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      color: #007bff;
+    }
+
+    h2 {
+      color: #0056b3;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    table th,
+    table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    form {
+      background-color: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    form input,
+    form select,
+    form button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    form button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+    }
+
+    form button:hover {
+      background-color: #218838;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Bienvenido <%= displayName %>
-  </h1>
-  <p>Tu esta registrado como administrador.</p>
+  <div class="container">
+    <h1>Bienvenido <%= displayName %>
+    </h1>
+    <p>Estás registrado como administrador.</p>
 
-  <!-- Botones para las opciones de clientes -->
-  <button><a href="/admin/dashboard?clientOptions=true">Clients</a></button>
-  <button><a href="/admin/dashboard?sectorOptions=true">Sectors</a></button>
-  <button><a href="/admin/dashboard?interruptionOptions=true">Interruptions</a></button>
-  <form action="/auth/logout" method="GET">
-    <button type="submit">Log out</button>
-  </form>
+    <!-- Botones para las opciones de clientes -->
+    <button><a href="/admin/dashboard?clientOptions=true">Clientes</a></button>
+    <button><a href="/admin/dashboard?sectorOptions=true">Sectores</a></button>
+    <button><a href="/admin/dashboard?interruptionOptions=true">Interrupciones</a></button>
+    <form action="/auth/logout" method="GET">
+      <button class="logout-btn" type="submit">Cerrar sesión</button>
+    </form>
 
-  <!-- Contenido dinámico -->
-  <div class="client-options">
-    <% if (clientOptions==='true' ) { %>
-      <h2>Gestion de Clientes</h2>
-      <button><a href="/admin/dashboard?createClientForm=true">Crear Cliente</a></button>
-      <button><a href="/admin/dashboard?listClientsForm=true">Listar Clientes</a></button>
-      <% } %>
-  </div>
-  <div class="sector-options">
-    <% if (sectorOptions==='true' ) { %>
-      <h2>Gestion de Sectores</h2>
-      <button><a href="/admin/dashboard?createSectorForm=true">Crear Sector</a></button>
-      <button><a href="/admin/dashboard?listSectorsForm=true">Listar Sector</a></button>
-      <% } %>
-  </div>
-  <div class="interrupcion-options">
-    <% if (interruptionOptions==='true' ) { %>
-      <h2>Gestion de Interrupciones</h2>
-      <button><a href="/admin/dashboard?createInterruptionForm=true">Crear Interrupcion</a></button>
-      <button><a href="/admin/dashboard?listInterruptionsForm=true">Listar Interrupcion</a></button>
-      <% } %>
-  </div>
+    <!-- Contenido dinámico -->
+    <div class="client-options">
+      <% if (clientOptions==='true' ) { %>
+        <h2>Gestión de Clientes</h2>
+        <button><a href="/admin/dashboard?createClientForm=true">Crear Cliente</a></button>
+        <button><a href="/admin/dashboard?listClientsForm=true">Listar Clientes</a></button>
+        <% } %>
+    </div>
 
-  <!-- Formulario de Crear Cliente -->
-  <div class="create-client-form">
-    <% if (createClientForm==='true' ) { %>
-      <h2>Create New Client</h2>
-      <form action="/admin" method="POST">
-        <label for="idCard">Cédula:</label>
-        <input type="text" id="idCard" name="idCard" required /><br />
+    <div class="sector-options">
+      <% if (sectorOptions==='true' ) { %>
+        <h2>Gestión de Sectores</h2>
+        <button><a href="/admin/dashboard?createSectorForm=true">Crear Sector</a></button>
+        <button><a href="/admin/dashboard?listSectorsForm=true">Listar Sectores</a></button>
+        <% } %>
+    </div>
 
-        <label for="coordinates">Coordinates:</label>
-        <input type="text" id="coordinates" name="coordinates" placeholder="Latitud, Longitud" required /><br />
+    <div class="interruption-options">
+      <% if (interruptionOptions==='true' ) { %>
+        <h2>Gestión de Interrupciones</h2>
+        <button><a href="/admin/dashboard?createInterruptionForm=true">Crear Interrupción</a></button>
+        <button><a href="/admin/dashboard?listInterruptionsForm=true">Listar Interrupciones</a></button>
+        <% } %>
+    </div>
 
-        <label for="firstName">Nombres:</label>
-        <input type="text" id="names" name="names" required /><br />
+    <!-- Formulario de Crear Cliente -->
+    <div class="create-client-form">
+      <% if (createClientForm==='true' ) { %>
+        <h2>Crear Nuevo Cliente</h2>
+        <form action="/admin" method="POST">
+          <label for="idCard">Cédula:</label>
+          <input type="text" id="idCard" name="idCard" required />
 
-        <label for="lastName">Apellidos:</label>
-        <input type="text" id="surnames" name="surnames" required /><br />
+          <label for="coordinates">Coordenadas:</label>
+          <input type="text" id="coordinates" name="coordinates" placeholder="Latitud, Longitud" required />
 
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="mail" name="mail" required /><br />
+          <label for="names">Nombres:</label>
+          <input type="text" id="names" name="names" required />
 
-        <label for="password">Contraseña:</label>
-        <input type="text" id="password" name="password" required /><br />
+          <label for="surnames">Apellidos:</label>
+          <input type="text" id="surnames" name="surnames" required />
 
-        <label for="role">Role:</label>
-        <select id="role" name="role">
-          <option value="CLIENT" selected>CLIENT</option>
-          <option value="ADMIN">ADMIN</option>
-        </select><br />
+          <label for="mail">Correo electrónico:</label>
+          <input type="email" id="mail" name="mail" required />
 
-        <button type="submit" name="action" value="createClient">Create Client</button>
-      </form>
-      <% } %>
-  </div>
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="password" required />
 
-  <!-- Formulario para Listar Clientes -->
-  <div class="list-clients-form">
-    <% if (listClientsForm==='true' ) { %>
-      <h2>List of Clients</h2>
-      <table border="1">
-        <thead>
-          <tr>
-            <th>Actions</th>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Mail</th>
-            <th>Role</th>
-            <th>Usernmame</th>
-            <th>Password</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% clients.forEach(function(client) { %>
+          <label for="role">Rol:</label>
+          <select id="role" name="role">
+            <option value="CLIENT" selected>CLIENTE</option>
+            <option value="ADMIN">ADMINISTRADOR</option>
+          </select>
+
+          <button type="submit" name="action" value="createClient">Crear Cliente</button>
+        </form>
+        <% } %>
+    </div>
+
+    <!-- Tabla de Clientes -->
+    <div class="list-clients-form">
+      <% if (listClientsForm==='true' ) { %>
+        <h2>Lista de Clientes</h2>
+        <table>
+          <thead>
             <tr>
-              <td>
-                <button>
-                  <a href="/admin/edit-user/<%= client.idCard %>"
-                    style="text-decoration: none; color: rgb(0, 91, 209);">Edit</a>
-                </button>
-                <button><a href="/admin/delete-user/<%= client.idCard %>"
-                    style="text-decoration: none; color: rgb(231, 10, 10);">Delete</a></button>
-              </td>
-              <td>
-                <%= client.idCard %>
-              </td>
-              <td>
-                <%= client.names %>
-                  <%= client.surnames %>
-              </td>
-              <td>
-                <%= client.mail %>
-              </td>
-              <td>
-                <%= client.role %>
-              </td>
-              <td>
-                <%= client.username %>
-              </td>
-              <td>
-                <%= client.password %>
-              </td>
+              <th>Acciones</th>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Rol</th>
+              <th>Usuario</th>
             </tr>
-            <% }); %>
-        </tbody>
-      </table>
-      <% } %>
-  </div>
+          </thead>
+          <tbody>
+            <% clients.forEach(function(client) { %>
+              <tr>
+                <td>
+                  <button>
+                    <a href="/admin/edit-user/<%= client.idCard %>">Editar</a>
+                  </button>
+                  <button>
+                    <a href="/admin/delete-user/<%= client.idCard %>">Eliminar</a>
+                  </button>
+                </td>
+                <td>
+                  <%= client.idCard %>
+                </td>
+                <td>
+                  <%= client.names %>
+                    <%= client.surnames %>
+                </td>
+                <td>
+                  <%= client.mail %>
+                </td>
+                <td>
+                  <%= client.role %>
+                </td>
+                <td>
+                  <%= client.username %>
+                </td>
+              </tr>
+              <% }); %>
+          </tbody>
+        </table>
+        <% } %>
+    </div>
 
-  <!-- Formulario de Crear Sector -->
-  <div class="create-sector-form">
-    <% if (createSectorForm==='true' ) { %>
-      <h2>Crear Nuevo Sector</h2>
-      <form action="/admin/create-sector" method="POST">
+    <!-- Formulario de Crear Sector -->
+    <div class="create-sector-form">
+      <% if (createSectorForm==='true' ) { %>
+        <h2>Crear Nuevo Sector</h2>
+        <form action="/admin/create-sector" method="POST">
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" name="name" required />
 
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required /><br />
+          <label for="polygon">Polígono (Formato: (lat1, lon1), (lat2, lon2), ...):</label>
+          <input type="text" id="polygon" name="polygon" required />
 
-        <label for="polygon">Polígono (Formato: (lat1, lon1), (lat2, lon2), ...):</label>
-        <input type="text" id="polygon" name="polygon" required /><br />
+          <button type="submit" name="action" value="createSector">Crear Sector</button>
+        </form>
+        <% } %>
+    </div>
 
-        <button type="submit" name="action" value="createSector">Crear Sector</button>
-      </form>
-      <% } %>
-  </div>
-
-  <!-- Formulario para Listar Sectores -->
-  <div class="list-sectors-form">
-    <% if (listSectorsForm==='true' ) { %>
-      <h2>Lista de Sectores</h2>
-      <table border="1">
-        <thead>
-          <tr>
-            <th>Actions</th>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Polígono</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% sectors.forEach(function(sector) { %>
+    <!-- Tabla de Sectores -->
+    <div class="list-sectors-form">
+      <% if (listSectorsForm==='true' ) { %>
+        <h2>Lista de Sectores</h2>
+        <table>
+          <thead>
             <tr>
-              <td>
-                <button>
-                  <a href="/admin/edit-sector/<%= sector.id %>"
-                    style="text-decoration: none; color: rgb(0, 91, 209);">Edit</a>
-                </button>
-                <button><a href="/admin/delete-sector/<%= sector.id %>"
-                    style="text-decoration: none; color: rgb(231, 10, 10);">Delete</a></button>
-              </td>
-              <td>
-                <%= sector.id %>
-              </td>
-              <td>
-                <%= sector.name %>
-              </td>
-              <td>
-                <%= sector.polygon %>
-              </td>
+              <th>Acciones</th>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Polígono</th>
             </tr>
-            <% }); %>
-        </tbody>
-      </table>
-      <% } %>
-  </div>
+          </thead>
+          <tbody>
+            <% sectors.forEach(function(sector) { %>
+              <tr>
+                <td>
+                  <button>
+                    <a href="/admin/edit-sector/<%= sector.id %>">Editar</a>
+                  </button>
+                  <button>
+                    <a href="/admin/delete-sector/<%= sector.id %>">Eliminar</a>
+                  </button>
+                </td>
+                <td>
+                  <%= sector.id %>
+                </td>
+                <td>
+                  <%= sector.name %>
+                </td>
+                <td>
+                  <%= sector.polygon %>
+                </td>
+              </tr>
+              <% }); %>
+          </tbody>
+        </table>
+        <% } %>
+    </div>
 
-  <!-- Formulario de Crear Interrupción -->
-  <div class="create-interruption-form">
-    <% if (createInterruptionForm==='true' ) { %>
-      <h2>Crear Nueva Interrupción</h2>
-      <form action="/admin/create-interruption" method="POST">
+    <!-- Formulario de Crear Interrupción -->
+    <div class="create-interruption-form">
+      <% if (createInterruptionForm==='true' ) { %>
+        <h2>Crear Nueva Interrupción</h2>
+        <form action="/admin/create-interruption" method="POST">
+          <label for="startTime">Hora de Inicio:</label>
+          <input type="time" id="startTime" name="startTime" required />
 
-        <label for="startTime">Hora de Inicio:</label>
-        <input type="time" id="startTime" name="startTime" required /><br />
+          <label for="endTime">Hora de Fin:</label>
+          <input type="time" id="endTime" name="endTime" required />
 
-        <label for="endTime">Hora de Fin:</label>
-        <input type="time" id="endTime" name="endTime" required /><br />
+          <label for="sectorId">ID del Sector:</label>
+          <input type="number" id="sectorId" name="sectorId" required />
 
-        <label for="sectorId">ID del Sector:</label>
-        <input type="number" id="sectorId" name="sectorId" required /><br />
+          <button type="submit" name="action" value="createInterruption">Crear Interrupción</button>
+        </form>
+        <% } %>
+    </div>
 
-        <button type="submit" name="action" value="createInterruption">Crear Interrupción</button>
-      </form>
-      <% } %>
-  </div>
-
-  <!-- Formulario para Listar Interrupciones -->
-  <div class="list-interruptions-form">
-    <% if (listInterruptionsForm==='true' ) { %>
-      <h2>Lista de Interrupciones</h2>
-      <table border="1">
-        <thead>
-          <tr>
-            <th>Actions</th>
-            <th>ID</th>
-            <th>Hora de Inicio</th>
-            <th>Hora de Fin</th>
-            <th>ID del Sector</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% interruptions.forEach(function(interruption) { %>
+    <!-- Tabla de Interrupciones -->
+    <div class="list-interruptions-form">
+      <% if (listInterruptionsForm==='true' ) { %>
+        <h2>Lista de Interrupciones</h2>
+        <table>
+          <thead>
             <tr>
-              <td>
-                <button>
-                  <a href="/admin/edit-interruption/<%= interruption.id %>"
-                    style="text-decoration: none; color: rgb(0, 91, 209);">Edit</a>
-                </button>
-                <button><a href="/admin/delete-interruption/<%= interruption.id %>"
-                    style="text-decoration: none; color: rgb(231, 10, 10);">Delete</a></button>
-              </td>
-              <td>
-                <%= interruption.id %>
-              </td>
-              <td>
-                <%= interruption.startTime %>
-              </td>
-              <td>
-                <%= interruption.endTime %>
-              </td>
-              <td>
-                <%= interruption.sectorId %>
-              </td>
+              <th>Acciones</th>
+              <th>ID</th>
+              <th>Hora de Inicio</th>
+              <th>Hora de Fin</th>
+              <th>ID del Sector</th>
             </tr>
-            <% }); %>
-        </tbody>
-      </table>
-      <% } %>
+          </thead>
+          <tbody>
+            <% interruptions.forEach(function(interruption) { %>
+              <tr>
+                <td>
+                  <button>
+                    <a href="/admin/edit-interruption/<%= interruption.id %>">Editar</a>
+                  </button>
+                  <button>
+                    <a href="/admin/delete-interruption/<%= interruption.id %>">Eliminar</a>
+                  </button>
+                </td>
+                <td>
+                  <%= interruption.id %>
+                </td>
+                <td>
+                  <%= interruption.startTime %>
+                </td>
+                <td>
+                  <%= interruption.endTime %>
+                </td>
+                <td>
+                  <%= interruption.sectorId %>
+                </td>
+              </tr>
+              <% }); %>
+          </tbody>
+        </table>
+        <% } %>
+    </div>
+
   </div>
 </body>
 

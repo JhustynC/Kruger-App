@@ -9,7 +9,7 @@ export class UpdateInterruptionDto {
   public get values() {
     const values: { [key: string]: any } = {};
 
-    if (this.id !== undefined) {
+    if (this.id) {
       values.id = this.id;
     }
     if (this.startTime) {

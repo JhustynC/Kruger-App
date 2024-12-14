@@ -73,17 +73,17 @@ export class InterruptionDatasourceImp implements AbsInterruptionDatasource {
     return InterruptionEntity.fromObject(interruption);
   }
   async updateInterruption(
-    updateInterruptionDtp: UpdateInterruptionDto
+    updateInterruptionDto: UpdateInterruptionDto
   ): Promise<InterruptionEntity> {
-    const { id } = updateInterruptionDtp;
+    const { id } = updateInterruptionDto;
     // await this.getById(id);
-    console.log(updateInterruptionDtp);
+    console.log(updateInterruptionDto);
     const updatedInterruption = await prisma.interruption.update({
       where: {
         id: id,
       },
       data: {
-        ...updateInterruptionDtp.values,
+        ...updateInterruptionDto.values,
       },
     });
     return InterruptionEntity.fromObject(updatedInterruption);
