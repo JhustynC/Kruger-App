@@ -1,0 +1,22 @@
+{"level":"low","message":"Create 32462362 successfully","createAt":"2024-12-14T18:26:15.128Z","origin":"create-user.usecas.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T18:38:54.435Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T18:39:07.436Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T18:39:07.695Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:14:51.331Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:18:42.317Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:27:24.934Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:27:57.721Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:27:57.965Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:28:29.332Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:28:59.017Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:41:23.158Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:41:28.835Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:41:33.677Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:41:33.928Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:41:42.882Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:41:43.130Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:41:47.004Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:41:58.969Z","origin":"profile.controller.ts"}
+{"level":"high","message":"Create 423532451 successfully","createAt":"2024-12-14T19:42:19.162Z","origin":"create-user.usecas.ts"}
+{"level":"high","message":"Update user with idCard 423532451 successfully","createAt":"2024-12-14T19:42:33.850Z","origin":"update-user.usecase.ts"}
+{"level":"high","message":"User with 423532451 deleted successfully","createAt":"2024-12-14T19:42:39.365Z","origin":"delete-user.usecas.ts"}

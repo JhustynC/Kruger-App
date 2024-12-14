@@ -1,4 +1,3 @@
-{"level":"low","message":"Create 32462362 successfully","createAt":"2024-12-14T18:26:15.128Z","origin":"create-user.usecas.ts"}
 {"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T18:38:54.435Z","origin":"profile.controller.ts"}
 {"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T18:39:07.436Z","origin":"profile.controller.ts"}
 {"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T18:39:07.695Z","origin":"profile.controller.ts"}
@@ -9,3 +8,11 @@
 {"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:27:57.965Z","origin":"profile.controller.ts"}
 {"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:28:29.332Z","origin":"profile.controller.ts"}
 {"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:28:59.017Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:41:23.158Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:41:28.835Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:41:33.677Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:41:33.928Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:41:42.882Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:41:43.130Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with christopherarias2002@gmail.com login successfully","createAt":"2024-12-14T19:41:47.004Z","origin":"profile.controller.ts"}
+{"level":"medium","message":"User with jhustyn7@gmail.com login successfully","createAt":"2024-12-14T19:41:58.969Z","origin":"profile.controller.ts"}
