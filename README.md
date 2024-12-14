@@ -5,8 +5,7 @@
 
 Aplicación para llevar un registro de los horarios de interrupción del servicio de energía eléctrica.
 
-Los requisitos para levantar el proyecto se encuentran depues del Proceso de Desarrollo.
----
+## Los requisitos para levantar el proyecto se encuentran depues del Proceso de Desarrollo.
 
 ## Proceso de Desarrollo
 
@@ -22,13 +21,11 @@ Cada área cuenta con un CRUD completo. Por parte del cliente, solo tendrá acce
 
 ![Dashboard Administrador](./images/admin-dashboard2.png "Dashboard ")
 
-
 Para determinar el horario de interrupciones según las coordenadas de un cliente, se considera el sector al que pertenece. Los sectores están definidos mediante polígonos. Para identificar si las coordenadas de un cliente se encuentran dentro de un polígono, se implementó el algoritmo **Ray Casting**, que permite verificar si un punto pertenece a un cuadrante formado por vértices.
 
 Solo los usuarios registrados previamente por el administrador son los que tiene acceso al sistema
 
-![Dashboard CLient](./images/client-dashboard2.png "Dashboard ")
----
+## ![Dashboard CLient](./images/client-dashboard2.png "Dashboard ")
 
 ### **1. Capa de Presentation**
 
@@ -160,6 +157,15 @@ npx prisma migrate dev --name <descripcion_de_la_migracion>
 ```
 
 Esto aplicará los cambios a la base de datos y generará un nuevo cliente Prisma.
+
+---
+
+### 4. Levantar Aplicación
+
+Una vez realizados todas las configuraciones
+Ejcutar el comando:
+
+`npm run dev`
 
 ---
 
