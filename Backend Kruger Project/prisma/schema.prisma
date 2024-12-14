@@ -29,7 +29,7 @@ model User {
   role        UserRol
   username    String
   password    String
-  user_id     Int     @default(0)
+  user_id     Int      @default(0)
   created_at  DateTime @default(now())
   update_at   DateTime @default(now())
   sectors     Sector[] @relation("UserSectors") // Relación con Sector
@@ -37,11 +37,11 @@ model User {
 
 model Sector {
   id            Int            @id @default(autoincrement())
-  name          String
+  name          String         @unique
   polygon       String
   created_at    DateTime       @default(now())
   update_at     DateTime       @default(now())
-  user_id       Int
+  user_id       Int            @default(1)
   user          User           @relation("UserSectors", fields: [user_id], references: [id]) // Relación con User
   interruptions Interruption[] // Relación con Interruption
 }

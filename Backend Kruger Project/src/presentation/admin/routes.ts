@@ -4,32 +4,32 @@ import {
   isAuthenticated,
   isEmailRegistered,
 } from "../auth/middleware/auth.middleware";
-import { ProfileController } from "./controller";
+
 import { UserDatasourceImp } from "../../infrastructure/datasources/user.datasource";
 import { UserRepositoryImp } from "../../infrastructure/repositories/user.repository";
+import { AdminController } from "./controller";
 
 const asyncHandler = (fn: any) => (req: Request, res: Response, next: any) =>
   Promise.resolve(fn(req, res, next)).catch(next);
 
-export class ProfileRoutes {
+export class AdminRoutes {
   static get routes(): Router {
     const router = Router();
     const userRepository = new UserRepositoryImp(new UserDatasourceImp());
-    const profileController = new ProfileController(userRepository);
+    const adminController = new AdminController(userRepository);
 
-    // Ruta para optener las opciones del administrador
     router.get(
-      "/roles",
+      "/dashboard",
       isAuthenticated,
       isEmailRegistered,
-      asyncHandler(profileController.roles)
+      adminController.dasboard
     );
 
     // Rutas para la gestion de usuarios
-    // router.post("/", profileController.createUser.bind(profileController));
-    // router.get("/delete-user/:idCard", profileController.deleteClient);
-    // router.get("/edit-user/:idCard", asyncHandler(profileController.editUser));
-    // router.post("/update-user", asyncHandler(profileController.updateUser));
+    router.post("/", adminController.createUser.bind(adminController));
+    router.get("/delete-user/:idCard", adminController.deleteClient);
+    router.get("/edit-user/:idCard", asyncHandler(adminController.editUser));
+    router.post("/update-user", asyncHandler(adminController.updateUser));
 
     // Rutas para la gestion de sectores
 

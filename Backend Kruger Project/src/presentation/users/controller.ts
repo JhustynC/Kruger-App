@@ -22,7 +22,7 @@ export class UserController {
   };
 
   public getUserById = (req: Request, res: Response) => {
-    var userId = Number.parseInt(req.params.id);
+    var userId = req.params.id;
     new GetUser(this.repository)
       .exceute(userId)
       .then((user) => res.json(user))

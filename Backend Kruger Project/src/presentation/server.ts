@@ -44,6 +44,8 @@ export class Server {
     this.app.set("view engine", "ejs");
     this.app.set("views", [
       path.join(__dirname, "../presentation/profile/views"),
+      path.join(__dirname, "../presentation/admin/views"),
+      path.join(__dirname, "../presentation/client/views"),
       path.join(__dirname, "../presentation/auth/views"),
     ]); // Directorio donde se guardan las vistas
 

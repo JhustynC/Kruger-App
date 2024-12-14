@@ -1,7 +1,8 @@
 export class SectorEntity {
   constructor(
-    private readonly name: string,
-    private readonly polygon: [number, number][]
+    public readonly id: number,
+    public readonly name: string,
+    public readonly polygon: [number, number][] = []
   ) {}
 
   static polygonStringToArray(texto: string): [number, number][] {
@@ -24,8 +25,10 @@ export class SectorEntity {
   }
 
   static fromObject = (object: { [key: string]: any }): SectorEntity => {
-    const { name, polygon } = object;
+    const { id, name, polygon } = object;
     let polygonArray: [number, number][] = [];
+
+    if (!id || typeof id !== "number") throw new Error("Sector id errro");
 
     if (!name || typeof name === "string")
       throw new Error("Sector name is required");
@@ -41,8 +44,7 @@ export class SectorEntity {
     } else if (!Array.isArray(polygon))
       throw new Error("Coordinates must be an array of numbers");
 
-    const sector = new SectorEntity(name, polygonArray);
+    const sector = new SectorEntity(id, name, polygonArray);
     return sector;
   };
 }
-  

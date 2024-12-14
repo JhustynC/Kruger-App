@@ -8,20 +8,35 @@
 </head>
 
 <body>
-  <h1>Welcome <%= displayName %>
+  <h1>Bienvenido <%= displayName %>
   </h1>
-  <p>You are logged in as an admin.</p>
+  <p>Tu esta registrado como administrador.</p>
 
   <!-- Botones para las opciones de clientes -->
-  <button><a href="/profile/dashboard?clientOptions=true">Clients</a></button>
+  <button><a href="/admin/dashboard?clientOptions=true">Clients</a></button>
+  <button><a href="/admin/dashboard?sectorOptions=true">Sectors</a></button>
+  <button><a href="/admin/dashboard?interruptionOptions=true">Interruptions</a></button>
 
   <!-- Contenido dinámico -->
   <div class="client-options">
     <% if (clientOptions==='true' ) { %>
-      <h2>Client Management</h2>
-      <button><a href="/profile/dashboard?createClientForm=true">Crear Cliente</a></button>
-      <button><a href="/profile/dashboard?listClientsForm=true">Listar Clientes</a></button>
-
+      <h2>Gestion de Clientes</h2>
+      <button><a href="/admin/dashboard?createClientForm=true">Crear Cliente</a></button>
+      <button><a href="/admin/dashboard?listClientsForm=true">Listar Clientes</a></button>
+      <% } %>
+  </div>
+  <div class="sector-options">
+    <% if (sectorOptions==='true' ) { %>
+      <h2>Gestion de Sectores</h2>
+      <button><a href="/admin/dashboard?createSectorForm=true">Crear Sector</a></button>
+      <button><a href="/admin/dashboard?listSectorsForm=true">Listar Sector</a></button>
+      <% } %>
+  </div>
+  <div class="interrupcion-options">
+    <% if (interruptionOptions==='true' ) { %>
+      <h2>Gestion de Interrupciones</h2>
+      <button><a href="/admin/dashboard?createInterruptionForm=true">Crear Interrupcion</a></button>
+      <button><a href="/admin/dashboard?listInterruptionsForm=true">Listar Interrupcion</a></button>
       <% } %>
   </div>
 
@@ -29,7 +44,7 @@
   <div class="create-client-form">
     <% if (createClientForm==='true' ) { %>
       <h2>Create New Client</h2>
-      <form action="/profile" method="POST">
+      <form action="/admin" method="POST">
         <label for="idCard">Cédula:</label>
         <input type="text" id="idCard" name="idCard" required /><br />
 
@@ -80,10 +95,10 @@
             <tr>
               <td>
                 <button>
-                  <a href="/profile/edit-user/<%= client.idCard %>"
+                  <a href="/admin/edit-user/<%= client.idCard %>"
                     style="text-decoration: none; color: rgb(0, 91, 209);">Edit</a>
                 </button>
-                <button><a href="/profile/delete-user/<%= client.idCard %>"
+                <button><a href="/admin/delete-user/<%= client.idCard %>"
                     style="text-decoration: none; color: rgb(231, 10, 10);">Delete</a></button>
               </td>
               <td>

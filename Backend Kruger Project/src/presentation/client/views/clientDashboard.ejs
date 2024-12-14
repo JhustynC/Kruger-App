@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revisión de Interrupciones</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Revisión de Interrupciones de Luz</h1>
+
+    <!-- Formulario para ingresar coordenadas -->
+    <form id="interruptionForm" method="POST" action="/revisar-interrupciones">
+      <label for="coordinates">Ingrese las coordenadas del domicilio:</label>
+      <input type="text" id="coordinates" name="coordinates" placeholder="Ej: -2.90123, -79.00456" required>
+
+      <button type="submit">Revisar Interrupciones</button>
+    </form>
+
+    <!-- Tabla de resultados -->
+    <% if (interruptions && interruptions.length> 0) { %>
+      <h2>Interrupciones detectadas</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre del Sector</th>
+            <th>Hora de Inicio</th>
+            <th>Hora de Fin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% interruptions.forEach(interruption=> { %>
+            <tr>
+              <td>
+                <%= interruption.sector %>
+              </td>
+              <td>
+                <%= interruption.startTime %>
+              </td>
+              <td>
+                <%= interruption.endTime %>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+        <p>No se encontraron interrupciones para las coordenadas proporcionadas.</p>
+        <% } %>
+  </div>
+</body>
+
+</html>
