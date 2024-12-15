@@ -5,6 +5,7 @@ import { isAuthenticated } from "./auth/middleware/auth.middleware";
 import { ProfileRoutes } from "./profile/routes";
 import { AdminRoutes } from "./admin/routes";
 import { ClientRoutes } from "./client/routes";
+import { isRoleAdmin } from "./admin/middleware/role.middleware";
 
 export class AppRoutes {
   static get routes(): Router {
@@ -23,7 +24,7 @@ export class AppRoutes {
     // router.use("/users", UserRoutes.routes);
 
     //! Ruta principal para el perfil (redirige al dashboard)
-    router.get("/admin", isAuthenticated, (req, res) => {
+    router.get("/admin", isAuthenticated, isRoleAdmin, (req, res) => {
       res.redirect("/admin/dashboard");
     });
 
@@ -44,7 +45,7 @@ export class AppRoutes {
     router.use("/client", isAuthenticated, ClientRoutes.routes);
 
     //* Para administradores
-    router.use("/admin", isAuthenticated, AdminRoutes.routes);
+    router.use("/admin", isAuthenticated, isRoleAdmin, AdminRoutes.routes);
 
     // Middleware para manejar rutas desconocidas
     router.use((req, res) => {
