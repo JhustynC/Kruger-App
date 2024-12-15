@@ -43,6 +43,7 @@ En esta capa se encuentra:
 
 - **Configuración del servidor:** Implementada con **Express**.
 - **Rutas y controladores:** Los controladores consumen los casos de uso definidos en la capa de **Domain**.
+- **Seguridad en base a loss roles:** Los clientes no tiene acceso al dashboard ni a las acciones del administrador.
 
 ---
 
