@@ -9,7 +9,7 @@ Aplicación para llevar un registro de los horarios de interrupción del servici
 
 ## Proceso de Desarrollo
 
-La aplicación está desarrollada en **Node.js** siguiendo los principios de **Clean Architecture**, con una estructura dividida en tres capas principales: **Presentation**, **Domain** e **Infrastructure**. Además, se aplica el patrón **MVC** para la implementación de los endpoints y las vistas (REST API).
+La aplicación está desarrollada en **Node.js** enfocada principalmente en el Backend (utilizando Express) siguiendo los principios de **Clean Architecture**, con una estructura dividida en tres capas principales: **Presentation**, **Domain** e **Infrastructure**. Además, se aplica el patrón **MVC** para la implementación de los endpoints y las vistas (REST API).
 
 La aplicación está diseñada para que el administrador pueda gestionar tres elementos principales:
 
@@ -19,11 +19,21 @@ La aplicación está diseñada para que el administrador pueda gestionar tres el
 
 Cada área cuenta con un CRUD completo. Por parte del cliente, solo tendrá acceso a la información de las interrupciones correspondientes a sus coordenadas.
 
+las credenciales del dministrador son:
+
+- admin@example.com
+- 123456
+
 ![Dashboard Administrador](./images/admin-dashboard2.png "Dashboard ")
 
 Para determinar el horario de interrupciones según las coordenadas de un cliente, se considera el sector al que pertenece. Los sectores están definidos mediante polígonos. Para identificar si las coordenadas de un cliente se encuentran dentro de un polígono, se implementó el algoritmo **Ray Casting**, que permite verificar si un punto pertenece a un cuadrante formado por vértices.
 
 Solo los usuarios registrados previamente por el administrador son los que tiene acceso al sistema
+
+Las credenciales de un cliente son:
+
+- client@example.com
+- 123456
 
 ## ![Dashboard CLient](./images/client-dashboard2.png "Dashboard ")
 
